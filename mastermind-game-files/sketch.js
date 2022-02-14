@@ -1,22 +1,32 @@
-let w = 450;          // width of the canvas
-let h = 600;          // height of the canvas
-let columns = 4;      // columns in the game (how long the words will be)
-let rows = 6;         // rows in the game (total amt of guesses)
-let gridSize = 75;    // size of the grid boxes
-let squareSize = 60;  // size of the letter boxes 
-let yOffset = 45;     // offset for pushing the grid up/down
-let xOffset = 0;      // offset for pushing the grid left/right
-let yMargin = (h - rows * gridSize) / 2 + yOffset; // calculating the xmargin
-let xMargin = (w - columns * gridSize) / 2 + xOffset; // calculating the ymargin
+// Generic Variables
+let w     // width of the canvas
+let h     // height of the canvas
+let xCur; // track which row we're on
+let yCur; // track which column we're on
 
-// variables for tracking the letters
-let xCur = 0;
-let yCur = 0;
+// Grid Variables
+let columns     // columns in the game (how long the words will be)
+let rows        // rows in the game (total amt of guesses)
+let gridSize    // size of the grid boxes
+let squareSize  // size of the letter boxes 
+let yOffset     // offset for pushing the grid up/down
+let xOffset     // offset for pushing the grid left/right
+let ymargin     // calculating the xmargin
+let xMargin     // calculating the ymargin
+
+// Colors
+let gridColor   // color of the grid
+let letterBlank // color of the letter boxes when no letters have been used
+let letterRight // color of when a guessed letter is correct
+let letterClose // color of when a guessed letter is close
+let letterWrong // color of when a guessed letter is wrong
+
+// Letters array
 const letters = new Array();
 for (let i = 0; i < columns; i++) {
   letters[i] = new Array;
   for (let j = 0; j < rows; j++) {
-    letters[i][j] = null
+    letters[i][j] = '';
   }
 }
 
@@ -24,6 +34,35 @@ function setup() {
   // Create the canvas we'll work on as well as the background color
   createCanvas(w, h);
   background(40);
+
+  /* ----- Initialize variables -----*/
+  // Generic variables
+  w     = 450;
+  h     = 600;
+  xCur  = 0;
+  yCur  = 0;
+
+  // Grid Variables
+  columns     = 4;
+  rows        = 6;
+  gridSize    = 75;
+  squareSize  = 60;
+  yOffset     = 45;
+  xOffset     = 0;
+  yMargin     = (h - rows * gridSize) / 2 + yOffset;
+  xMargin     = (w - columns * gridSize) / 2 + xOffset;
+
+  // Color variables
+  gridColor   = 50;
+  letterBlank = 60;
+  letterRight = color(19, 186, 65);
+  letterClose = color(255, 159, 45);
+  letterWrong = color(247, 65, 65);
+
+  // Letters array
+  // for (j = 0; j < rows; j++) {
+  //   letters[j][0] = '';
+  // }
 } // setup()
 
 function draw() {
@@ -43,7 +82,16 @@ function draw() {
       let gridyPos = j * gridSize + yMargin;
 
       // ...create the two boxes in the grid
+
+      fill(gridColor);
       square(gridxPos, gridyPos, gridSize, 4);
+
+      if((j+1) % 2)
+        fill(letterClose);
+      else if ((j+1) % 3)
+        fill(letterWrong);
+      else
+        fill(letterRight);
       square(xPos, yPos, squareSize, 10);
 
       // ...and finally, 
