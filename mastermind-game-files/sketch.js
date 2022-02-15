@@ -26,15 +26,11 @@ const letters = new Array();
 for (let i = 0; i < columns; i++) {
   letters[i] = new Array;
   for (let j = 0; j < rows; j++) {
-    letters[i][j] = '';
+    letters[i][j] = null;
   }
 }
 
 function setup() {
-  // Create the canvas we'll work on as well as the background color
-  createCanvas(w, h);
-  background(40);
-
   /* ----- Initialize variables -----*/
   // Generic variables
   w     = 450;
@@ -63,6 +59,10 @@ function setup() {
   // for (j = 0; j < rows; j++) {
   //   letters[j][0] = '';
   // }
+
+  // Create the canvas we'll work on as well as the background color
+  createCanvas(w, h);
+  background(43);
 } // setup()
 
 function draw() {
@@ -94,10 +94,9 @@ function draw() {
         fill(letterRight);
       square(xPos, yPos, squareSize, 10);
 
-      // ...and finally, 
-      if (letters[i][j] != null) {
-        print("This letter is " + letters[i][j])
-      }
+      // if (letters[i][j] != null) {
+      //   print("This letter is " + letters[i][j])
+      // }
     }
   }
 
