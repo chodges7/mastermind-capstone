@@ -241,3 +241,4 @@ Temporary Items
 # Don't save all the files for the npm modules
 mastermind/front_end/node_modules
 *.env
+data/
