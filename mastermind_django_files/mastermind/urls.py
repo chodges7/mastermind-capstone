@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # https://learndjango.com/tutorials/django-login-and-logout-tutorial
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', front_end_views.home, name='home')
+    path('accounts/', include('accounts.urls')),
+    path('', include('front_end.urls'))
 ]
