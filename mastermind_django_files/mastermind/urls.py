@@ -15,12 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from front_end import views as front_end_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # https://learndjango.com/tutorials/django-login-and-logout-tutorial
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls')),
-    path('', include('front_end.urls'))
+    path('', include('front_end.urls')),
 ]
