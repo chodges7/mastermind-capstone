@@ -12,11 +12,11 @@ services:
 
   web:
     build: .
-    command: python3 mastermind_django_files/manage.py runserver 0.0.0.0:8000
+    command: python3 mastermind_django_files/manage.py runserver 0.0.0.0:80
     volumes:
       - .:/code
     ports:
-      - "8000:8000"
+      - "80:80"
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
