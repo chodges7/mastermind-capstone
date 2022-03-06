@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["54.177.155.198",]
+ALLOWED_HOSTS = ["54.177.155.198", "localhost",]
 
 
 # Application definition
@@ -128,11 +128,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Login/Logout Redirects
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
-
-# Email for forgotten password
-EMAIL_BACKEND = "django_ses.SESBackend"
-EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_SES_REGION_NAME = 'us-west-1'
-AWS_SES_REGION_ENDPOINT = 'email.us-west-1.amazonaws.com'
