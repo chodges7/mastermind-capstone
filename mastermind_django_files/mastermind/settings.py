@@ -130,5 +130,9 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 # Email for forgotten password
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_BACKEND = "django_ses.SESBackend"
 EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_SES_REGION_NAME = 'us-west-1a'
+AWS_SES_REGION_ENDPOINT ='email.us-west-1.amazonaws.com'
