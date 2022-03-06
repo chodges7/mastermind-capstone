@@ -26,7 +26,8 @@ def signup(request):
 
     return render(request, 'registration/signup.html', {'form': f})
 
-
+# The majority of the following function was from this tutorial
+# https://ordinarycoders.com/blog/article/django-password-reset
 def password_reset_request(request):
 	if request.method == "POST":
 		password_reset_form = PasswordResetForm(request.POST)
@@ -36,7 +37,7 @@ def password_reset_request(request):
 			if associated_users.exists():
 				for user in associated_users:
 					subject = "Password Reset Requested"
-					email_template_name = "main/password/password_reset_email.txt"
+					email_template_name = "registration/password_reset_email.txt"
 					c = {
                         "email": user.email,
                         'domain': 'your-website-name.com',

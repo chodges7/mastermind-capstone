@@ -135,4 +135,4 @@ EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 AWS_SES_REGION_NAME = 'us-west-1'
-AWS_SES_REGION_ENDPOINT ='email.us-west-1.amazonaws.com'
+AWS_SES_REGION_ENDPOINT = 'email.us-west-1.amazonaws.com'
