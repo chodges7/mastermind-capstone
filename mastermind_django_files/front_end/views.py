@@ -9,3 +9,10 @@ def homeView(request):
         'foo':"bar",
     }
     return HttpResponse(template.render(context, request))
+
+def gameView(request):
+    template = loader.get_template('game.html')
+    context = {
+        'foo':'bar',
+    }
+    return HttpResponse(template.render(context, request))
