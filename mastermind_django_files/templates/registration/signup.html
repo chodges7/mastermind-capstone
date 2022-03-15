@@ -3,6 +3,28 @@
 
 {% block title %}Sign Up{% endblock %}
 
+{% block javascript %}
+<script>
+  $("#id_username").change(function () {
+    var username = $(this).val();
+
+    $.ajax({
+      url: '/accounts/validate_username/',
+      data: {
+        'username': username
+      },
+      dataType: 'json',
+      success: function (data) {
+        if (data.is_taken) {
+          alert("A user with this username already exists.");
+        }
+      }
+    });
+
+  });
+</script>
+{% endblock %}
+
 {% block content %}
 <h2>Sign up</h2>
 <form method="post">
