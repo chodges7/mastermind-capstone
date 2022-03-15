@@ -19,6 +19,8 @@ def signup(request):
 
     return render(request, 'registration/signup.html', {'form': f})
 
+# The majority of this def function came from this tutorial:
+# https://simpleisbetterthancomplex.com/tutorial/2016/08/29/how-to-work-with-ajax-request-with-django.html
 def validate_username(request):
     username = request.GET.get('username', None)
     data = {
