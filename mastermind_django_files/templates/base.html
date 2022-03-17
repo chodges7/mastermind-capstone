@@ -1,16 +1,31 @@
 <!-- templates/base.html -->
 <!-- https://learndjango.com/tutorials/django-password-reset-tutorial -->
-{% load static %}<!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <title>{% block title %}Default Title{% endblock %}</title>
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}"> -->
-    {% block stylesheet %}{% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" type="image/x-icon" href="{% static 'theme/assets/favicon.ico'%}" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'theme/css/bootstrap.min.css'%}" rel="stylesheet" />
+    <!-- <link href="{% static 'theme/css/styles.css'%}" rel="stylesheet" /> -->
+    {% block head %}
+    {% endblock %}
 </head>
 
-<body>
+<body style="background-color: rgb(40, 40, 40);">
     <header>
     </header>
     <main>
@@ -21,5 +36,18 @@
     </footer>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     {% block javascript %}{% endblock %}
+    <!-- Footer-->
+    <footer class="footer bg-black small text-center text-white-50">
+        <div class="container px-2 px-lg-2"><a href="https://github.com/chodges7/mastermind-capstone">Github Repo</a></div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="{% static 'theme/js/scripts.js' %}"></script>
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 </html>

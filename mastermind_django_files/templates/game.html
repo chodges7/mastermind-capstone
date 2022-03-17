@@ -1,17 +1,12 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <script src="{% static 'p5.min.js' %}"></script>
-    <!-- <script src="{% static 'p5.sound.min.js' %}"></script> -->
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-    <meta charset="utf-8">
+{% block head %}
+<script src="{% static 'game/p5.min.js' %}"></script>
+<!-- <script src="{% static 'p5.sound.min.js' %}"></script> -->
+<link rel="stylesheet" type="text/css" href="{% static 'game/style.css' %}">
+{% endblock %}
 
-</head>
-
-<body style="background-color: rgb(40, 40, 40);">
-    <script src="{% static 'sketch.js' %}"></script>
-</body>
-
-</html>
+{% block content %}
+<script src="{% static 'game/sketch.js' %}"></script>
+{% endblock %}
