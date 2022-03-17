@@ -129,8 +129,8 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Login/Logout Redirects
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'game'
+LOGOUT_REDIRECT_URL = 'game'
 
 # Email for forgotten passwords
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"

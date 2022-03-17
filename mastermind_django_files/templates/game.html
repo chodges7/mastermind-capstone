@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block header %}
+{% if user.is_authenticated %}
+Hi {{ user.username }}! | <a href="{% url 'logout' %}">Log Out</a>
+{% else %}
+You are not logged in | <a href="{% url 'login' %}">Log In</a> | <a href="{% url 'signup' %}">Signup</a>
+{% endif %}
+{% endblock %}
+
 {% block head %}
 <script src="{% static 'game/p5.min.js' %}"></script>
 <!-- <script src="{% static 'p5.sound.min.js' %}"></script> -->
