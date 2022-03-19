@@ -34,20 +34,19 @@
         {% block content %}
         {% endblock %}
     </main>
+    {% block javascript %}
+    {% endblock %}
+    <!-- Jquery -->
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-    {% block javascript %}{% endblock %}
-    <!-- Footer-->
-    <footer class="footer bg-black text-center text-white-50">
-        <a href="https://github.com/chodges7/mastermind-capstone">Github Repo</a>
-    </footer>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="{% static 'theme/js/scripts.js' %}"></script>
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <!-- * *                               SB Forms JS                               * *-->
-    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <!-- Footer-->
+    <footer class="footer bg-black text-center text-white-50">
+        {% block footer %}
+        {% endblock %}
+        <a href="https://github.com/chodges7/mastermind-capstone">Github Repo</a>
+    </footer>
 </body>
 </html>
