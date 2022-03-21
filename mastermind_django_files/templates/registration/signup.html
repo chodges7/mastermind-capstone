@@ -9,21 +9,17 @@
 <!-- https://simpleisbetterthancomplex.com/tutorial/2016/08/29/how-to-work-with-ajax-request-with-django.html -->
 <script>
   $("#id_username").change(function () {
-    var username = $(this).val();
-
+    var form = $(this).closest("form");
     $.ajax({
-      url: '/accounts/validate_username/',
-      data: {
-        'username': username
-      },
+      url: '{% url "validate_username" %}',
+      data: form.serialize(),
       dataType: 'json',
       success: function (data) {
         if (data.is_taken) {
-          alert("A user with this username already exists.");
+          alert(data.error_message);
         }
       }
     });
-
   });
 </script>
 {% endblock %}
