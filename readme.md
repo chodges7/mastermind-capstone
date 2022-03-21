@@ -1,4 +1,4 @@
-# Mastermind Capstone [![Docker Build CI](https://github.com/chodges7/mastermind-capstone/actions/workflows/docker-build.yml/badge.svg?branch=main)](https://github.com/chodges7/mastermind-capstone/actions/workflows/docker-build.yml)
+# Mastermind Capstone [![Docker Build CI](https://github.com/chodges7/mastermind-capstone/actions/workflows/docker-build.yaml/badge.svg?branch=main)](https://github.com/chodges7/mastermind-capstone/actions/workflows/docker-build.yaml)
 
 ## Project Overview
 
