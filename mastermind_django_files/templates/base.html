@@ -31,8 +31,14 @@
         {% endblock %}
     </header>
     <main>
-        {% block content %}
-        {% endblock %}
+        <div class="contianer">
+            <div class="row justify-content-center">
+                <div class="col-3">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
     </main>
     {% block javascript %}
     {% endblock %}
