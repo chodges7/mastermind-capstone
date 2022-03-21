@@ -19,16 +19,16 @@ jobs:
           python-version: 3.8
       - name: install dependancies
         run: |
-          python -m pip install --upgrade pip
+          python3 -m pip install --upgrade pip
           pip install -r requirements.txt
         working-directory: ${{ env.working-directory }}
 
       - name: install pylint
         run: |
-          python -m pip install pylint pylint-django
+          pip install pylint pylint-django
         working-directory: ${{ env.working-directory }}
 
       - name: run linter
         run: |
-          shopt -s globstar && pylint --load-plugins pylint_django --django-settings-module=example.settings **/*.py
+          shopt -s globstar && pylint --load-plugins pylint_django --django-settings-module=mastermind.settings **/*.py
         working-directory: ${{ env.working-directory }}
