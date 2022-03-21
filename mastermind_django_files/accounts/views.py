@@ -2,6 +2,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 
 from . import forms
@@ -10,9 +11,12 @@ def signup(request):
     if request.method == 'POST':
         f = forms.CustomUserCreationForm(request.POST)
         if f.is_valid():
-            f.save()
+            new_user = f.save()
             messages.success(request, 'Account created successfully')
-            return redirect('home')
+            new_user = authenticate(username=f.cleaned_data['username'],
+                                    password=f.cleaned_data['password1'],)
+            login(request, new_user)
+            return redirect('/')
 
     else:
         f = forms.CustomUserCreationForm()
