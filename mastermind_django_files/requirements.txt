@@ -14,5 +14,6 @@ pytz==2021.3
 s3transfer==0.5.2
 six==1.16.0
 sqlparse==0.4.2
+standalone==1.0.1
 toml==0.10.2
 urllib3==1.26.8
