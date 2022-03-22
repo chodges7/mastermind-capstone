@@ -9,19 +9,19 @@ from . import forms
 
 def signup(request):
     if request.method == 'POST':
-        f = forms.CustomUserCreationForm(request.POST)
-        if f.is_valid():
-            new_user = f.save()
+        form = forms.CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
             messages.success(request, 'Account created successfully')
-            new_user = authenticate(username=f.cleaned_data['username'],
-                                    password=f.cleaned_data['password1'],)
+            new_user = authenticate(username=form.cleaned_data['username'],
+                                    password=form.cleaned_data['password1'],)
             login(request, new_user)
             return redirect('/')
 
     else:
-        f = forms.CustomUserCreationForm()
+        form = forms.CustomUserCreationForm()
 
-    return render(request, 'registration/signup.html', {'form': f})
+    return render(request, 'registration/signup.html', {'form': form})
 
 # The majority of this def function came from this tutorial:
 # https://simpleisbetterthancomplex.com/tutorial/2016/08/29/how-to-work-with-ajax-request-with-django.html

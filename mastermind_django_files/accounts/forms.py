@@ -16,15 +16,15 @@ class CustomUserCreationForm(forms.Form):
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
-        r = User.objects.filter(username=username)
-        if r.count():
+        temp = User.objects.filter(username=username)
+        if temp.count():
             raise ValidationError("Username already exists")
         return username
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
-        r = User.objects.filter(email=email)
-        if r.count():
+        temp = User.objects.filter(email=email)
+        if temp.count():
             raise ValidationError("Email already exists")
         return email
 
