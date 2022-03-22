@@ -30,5 +30,6 @@ jobs:
 
       - name: run linter
         run: |
-          shopt -s globstar && pylint --load-plugins pylint_django --django-settings-module=mastermind.settings **/*.py
+          pylint --load-plugins pylint_django --disable=missing-docstring --django-settings-module=mastermind.settings **/*.py
+        # shopt -s globstar && pylint --load-plugins pylint_django --django-settings-module=mastermind.settings **/*.py
         working-directory: ${{ env.working-directory }}
