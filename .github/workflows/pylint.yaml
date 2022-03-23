@@ -70,7 +70,7 @@ jobs:
         with:
           label: "Pylint score"
           status: ${{ needs.pylint.outputs.score }}
-          label-color: '#f294ee'
+          color: 'f294ee'
           path: ${{ steps.folder.outputs.path }}
 
       - name: Upload badge as artifact
