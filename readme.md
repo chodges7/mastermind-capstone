@@ -1,4 +1,4 @@
-# Mastermind Capstone [![Docker Build CI](https://github.com/chodges7/mastermind-capstone/actions/workflows/docker-build.yaml/badge.svg?branch=main)](https://github.com/chodges7/mastermind-capstone/actions/workflows/docker-build.yaml) [![python-linter](https://github.com/chodges7/mastermind-capstone/actions/workflows/pylint.yaml/badge.svg?branch=main)](https://github.com/chodges7/mastermind-capstone/actions/workflows/pylint.yaml)
+# Mastermind Capstone [![Docker Build CI](https://github.com/chodges7/mastermind-capstone/actions/workflows/docker-build.yaml/badge.svg?branch=main)](https://github.com/chodges7/mastermind-capstone/actions/workflows/docker-build.yaml) [![python-linter](.github/badges/lint-score.svg)](https://github.com/chodges7/mastermind-capstone/actions/workflows/pylint.yaml)
 
 ## Project Overview
 
