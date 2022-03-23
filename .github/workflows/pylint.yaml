@@ -88,7 +88,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add "${BADGE}"
-          git commit -m "Add/Update badge"
+          git commit -m "docs: add/update badge"
 
       - name: Push badge commit
         uses: ad-m/github-push-action@master
