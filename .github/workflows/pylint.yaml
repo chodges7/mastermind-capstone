@@ -34,12 +34,13 @@ jobs:
       - name: run linter
         id: linter
         run: |
-          SCORE= `pylint --load-plugins pylint_django --disable=missing-docstring --django-settings-module=mastermind.settings **/*.py | sed -n '\([-0-9.]*\)\/.*/\1/p'`
+          SCORE= `pylint --load-plugins pylint_django --disable=missing-docstring --django-settings-module=mastermind.settings **/*.py | grep -o '[0-9]*\.[0-9]+\/10'`
           echo "::set-output name=score::$SCORE"
         working-directory: ${{ env.working-directory }}
 
   badge:
     runs-on: ubuntu-latest
+    needs: pylint
 
     steps: 
       - name: Badge Action
@@ -47,6 +48,6 @@ jobs:
         with:
           label: "Pylint score"
           status: ${{ needs.pylint.outputs.score }}
-          color: '242, 148, 238'
+          color: '#f294ee'
 
 
