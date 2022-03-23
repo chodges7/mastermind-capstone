@@ -38,7 +38,7 @@ jobs:
       - name: run linter
         id: linter
         run: |
-          pylint --load-plugins pylint_django --disable=missing-docstring --django-settings-module=mastermind.settings **/*.py > out.txt
+          pylint --load-plugins pylint_django --fail-under=5 --disable=missing-docstring --django-settings-module=mastermind.settings **/*.py > out.txt
           cat out.txt
           SCORE=`cat out.txt | grep -e '[0-9]*\.[0-9]*\/10' | cut -c 29-`
           echo "::set-output name=score::$SCORE"
@@ -70,7 +70,7 @@ jobs:
         with:
           label: "Pylint score"
           status: ${{ needs.pylint.outputs.score }}
-          color: '#f294ee'
+          label-color: '#f294ee'
           path: ${{ steps.folder.outputs.path }}
 
       - name: Upload badge as artifact
