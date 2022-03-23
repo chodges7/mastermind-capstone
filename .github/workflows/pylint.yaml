@@ -34,7 +34,9 @@ jobs:
       - name: run linter
         id: linter
         run: |
-          SCORE= `pylint --load-plugins pylint_django --disable=missing-docstring --django-settings-module=mastermind.settings **/*.py | grep -o '[0-9]*\.[0-9]+\/10'`
+          pylint --load-plugins pylint_django --disable=missing-docstring --django-settings-module=mastermind.settings **/*.py > out.txt
+          cat out.txt
+          SCORE= `cat out.txt | grep -o '[0-9]*\.[0-9]+\/10'`
           echo "::set-output name=score::$SCORE"
         working-directory: ${{ env.working-directory }}
 
