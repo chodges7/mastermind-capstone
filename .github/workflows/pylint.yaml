@@ -12,10 +12,14 @@ jobs:
     env:
       working-directory: ./mastermind_django_files
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
+    outputs:
+      score: ${{ steps.linter.outputs.score }}
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v1
         with:
           python-version: 3.8
       - name: install dependancies
@@ -23,18 +27,26 @@ jobs:
           python3 -m pip install --upgrade pip
           pip install -r requirements.txt
         working-directory: ${{ env.working-directory }}
-
       - name: install pylint
         run: |
           pip install pylint pylint-django
         working-directory: ${{ env.working-directory }}
-
       - name: run linter
+        id: linter
         run: |
-          pylint --load-plugins pylint_django --disable=missing-docstring --output-format=json --output=pylint-out.json --django-settings-module=mastermind.settings **/*.py
+          SCORE= `pylint --load-plugins pylint_django --disable=missing-docstring --django-settings-module=mastermind.settings **/*.py | sed -n '\([-0-9.]*\)\/.*/\1/p'`
+          echo "::set-output name=score::$SCORE"
         working-directory: ${{ env.working-directory }}
 
-      - name: cat output
-        run: |
-          cat pylint-out.json
-        working-directory: ${{ env.working-directory }}
+  badge:
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: Badge Action
+        uses: emibcn/badge-action@v1.2.4
+        with:
+          label: "Pylint score"
+          status: ${{ needs.pylint.outputs.score }}
+          color: '242, 148, 238'
+
+
