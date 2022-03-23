@@ -1,6 +1,6 @@
 # accounts/forms.py
-from django.contrib.auth.models import User
 from django import forms
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
 # code for the majority of this class came from this tutorial:
@@ -16,14 +16,16 @@ class CustomUserCreationForm(forms.Form):
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
-        temp = User.objects.filter(username=username)
+        user_model = get_user_model()
+        temp = user_model.objects.filter(username=username)
         if temp.count():
             raise ValidationError("Username already exists")
         return username
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
-        temp = User.objects.filter(email=email)
+        user_model = get_user_model()
+        temp = user_model.objects.filter(email=email)
         if temp.count():
             raise ValidationError("Email already exists")
         return email
@@ -38,9 +40,12 @@ class CustomUserCreationForm(forms.Form):
         return password2
 
     def save(self, commit=True):
-        user = User.objects.create_user(
+        user_model = get_user_model()
+        user = user_model.objects.create_user(
             self.cleaned_data['username'],
             self.cleaned_data['email'],
             self.cleaned_data['password1']
         )
+        if commit:
+            user.save()
         return user

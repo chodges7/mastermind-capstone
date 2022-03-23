@@ -2,8 +2,8 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
 
 from . import forms
 
@@ -27,8 +27,9 @@ def signup(request):
 # https://simpleisbetterthancomplex.com/tutorial/2016/08/29/how-to-work-with-ajax-request-with-django.html
 def validate_username(request):
     username = request.GET.get('username', None)
+    user = get_user_model()
     data = {
-        'is_taken': User.objects.filter(username__iexact=username).exists()
+        'is_taken': user.objects.filter(username__iexact=username).exists()
     }
     if data['is_taken']:
         data['error_message'] = 'A user with this username already exists.'
