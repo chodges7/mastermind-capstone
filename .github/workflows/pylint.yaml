@@ -65,7 +65,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: badge
-          path: ${{ steps.coverage.outputs.path }}
+          path: ${{ steps.folder.outputs.path }}
           if-no-files-found: error
 
 
