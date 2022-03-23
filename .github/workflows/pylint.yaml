@@ -45,6 +45,11 @@ jobs:
     needs: pylint
 
     steps: 
+      - name: Extract branch name
+        id: extract_branch
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+
       - name: Make folder to hold badge
         id: folder
         run: |
@@ -67,5 +72,22 @@ jobs:
           name: badge
           path: ${{ steps.folder.outputs.path }}
           if-no-files-found: error
+
+      - name: Commit badge
+        continue-on-error: true
+        env:
+          BADGE: ${{ steps.coverage.outputs.path }}
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add "${BADGE}"
+          git commit -m "Add/Update badge"
+          
+      - name: Push badge commit
+        uses: ad-m/github-push-action@master
+        if: ${{ success() }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.coverage.outputs.branch }}
 
 
