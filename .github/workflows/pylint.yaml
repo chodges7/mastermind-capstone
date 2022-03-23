@@ -45,12 +45,27 @@ jobs:
     needs: pylint
 
     steps: 
+      - name: Make folder to hold badge
+        id: folder
+        run: |
+          mkdir -p "${BADGE_PATH%/*}"
+          echo "##[set-output name=path;]${BADGE_PATH}"
+        env:
+          BADGE_PATH: .github/badges/lint-score.svg
+        
       - name: Badge Action
         uses: emibcn/badge-action@v1.2.4
         with:
           label: "Pylint score"
           status: ${{ needs.pylint.outputs.score }}
           color: '#f294ee'
-          path: '.github/badges/lint-score.svg'
+          path: ${{ steps.folder.outputs.path }}
+
+      - name: Upload badge as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: badge
+          path: ${{ steps.coverage.outputs.path }}
+          if-no-files-found: error
 
 
