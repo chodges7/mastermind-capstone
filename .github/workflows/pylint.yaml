@@ -51,5 +51,6 @@ jobs:
           label: "Pylint score"
           status: ${{ needs.pylint.outputs.score }}
           color: '#f294ee'
+          path: '.github/badges/lint-score.svg'
 
 
