@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}{{ title }}{% endblock %}
+
 {% block header %}
 {% if user.is_authenticated %}
 Hi {{ user.username }}! | <a href="{% url 'logout' %}">Log Out</a>

@@ -7,13 +7,13 @@ from django.template import loader
 def home_view(request):
     template = loader.get_template('home.html')
     context = {
-        'foo':"bar",
+        'title':"Homepage",
     }
     return HttpResponse(template.render(context, request))
 
 def game_view(request):
     template = loader.get_template('game.html')
     context = {
-        'foo':'bar',
+        'title':'Mastermind',
     }
     return HttpResponse(template.render(context, request))
