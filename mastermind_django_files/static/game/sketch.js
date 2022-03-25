@@ -20,6 +20,15 @@ let letterBlank // color of the letter boxes when no letters have been used
 let letterRight // color of when a guessed letter is correct
 let letterClose // color of when a guessed letter is close
 let letterWrong // color of when a guessed letter is wrong
+let btnStart    // color of menu start button
+let btnGeneric  // color of generic button
+
+// Menu
+let menu
+
+// Button Variables
+let BUTTON_HEIGHT
+let BUTTON_WIDTH
 
 // Letters array
 const letters = new Array();
@@ -51,9 +60,18 @@ function setup() {
   // Color variables
   gridColor   = 50;
   letterBlank = 60;
-  letterRight = color(19, 186, 65);
-  letterClose = color(255, 159, 45);
+  letterRight = color( 19,186, 65);
+  letterClose = color(255,159, 45);
   letterWrong = color(247, 65, 65);
+  btnStart    = color( 42,161,151);
+  btnGeneric  = color(131,148,150);
+
+  // Menu variable
+  menu = 0;
+
+  // Button Variables
+  BUTTON_HEIGHT = 50;
+  BUTTON_WIDTH = 100;
 
   // Letters array
   // for (j = 0; j < rows; j++) {
@@ -62,12 +80,49 @@ function setup() {
 
   // Create the canvas we'll work on as well as the background color
   createCanvas(w, h);
-  background(43);
 } // setup()
 
 function draw() {
   // TODO: check the keyboard for input. 
   //   When a letter is input update the letters array at that position.
+
+  if(menu == 0) {
+    menuView();
+  }
+  if(menu == 1) {
+    gameView();
+  } 
+
+} // draw()
+
+function mouseClicked() {
+  xLimit = BUTTON_WIDTH / 2;
+  yLimit = BUTTON_HEIGHT / 2;
+
+
+  console.log(mouseX + ", " + mouseY)
+
+  console.log("xLimit = " + xLimit)
+  console.log("yLimit = " + yLimit)
+  console.log("leftLimit = " + ((w/2) - xLimit) + " rightLimit = " + ((w/2) + xLimit))
+  console.log("upperLimit = " + ((h/2) - yLimit) + " rightLimit = " + ((h/2) + yLimit))
+
+
+  if (menu == 0) {
+    if (mouseX > (w/2 - xLimit) && mouseX < (w/2 + xLimit)) {
+      if (mouseY > (h/2 - yLimit) && mouseY < (h/2 + yLimit)) {
+        menu = 1
+      }
+    }
+  }
+  else {
+    menu = 0;
+  }
+} // mouseClicked()
+
+function gameView() {
+  background(43);
+  rectMode(CORNER);
 
   /* ----- Draw the grid and letter boxes ----- */
   // for each box in the grid...
@@ -86,9 +141,9 @@ function draw() {
       fill(gridColor);
       square(gridxPos, gridyPos, gridSize, 4);
 
-      if((j+1) % 2)
+      if ((j + 1) % 2)
         fill(letterClose);
-      else if ((j+1) % 3)
+      else if ((j + 1) % 3)
         fill(letterWrong);
       else
         fill(letterRight);
@@ -99,5 +154,18 @@ function draw() {
       // }
     }
   }
+}
 
-} // draw()
+function menuView(){
+  background(43);
+
+  rectMode(CENTER)
+  fill(btnStart)
+  rect(w/2, h/2, BUTTON_WIDTH, BUTTON_HEIGHT, 10);
+
+  textFont("Georgia")
+  textAlign(CENTER, CENTER)
+  textSize(25)
+  fill(0);
+  text("Start", w/2, h/2, BUTTON_WIDTH, BUTTON_HEIGHT);
+}
