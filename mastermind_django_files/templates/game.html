@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %} {{ page_title }} {% endblock %}
 
 {% block header %}
 {% if user.is_authenticated %}
