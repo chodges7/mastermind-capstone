@@ -32,7 +32,7 @@ jobs:
 
       - name: install pylint
         run: |
-          pip install pylint pylint-django
+          pip install pylint==2.12 pylint-django==2.5
         working-directory: ${{ env.working-directory }}
 
       - name: run linter
