@@ -21,6 +21,7 @@ jobs:
 
       - name: run linter
         run: |
+          npm
           npm ci
           npm run lint
         # eslint . --ext .js,.jsx,.ts,.tsx
