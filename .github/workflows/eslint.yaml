@@ -19,10 +19,9 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v2
 
-      - name: Install modules
-        run: yarn add eslint
-
       - name: run linter
-        id: linter
-        run: eslint . --ext .js,.jsx,.ts,.tsx
+        run: |
+          npm ci
+          npm run lint
+        # eslint . --ext .js,.jsx,.ts,.tsx
         # working-directory: ${{ env.working-directory }}
