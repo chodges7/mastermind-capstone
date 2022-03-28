@@ -31,19 +31,15 @@ let BUTTON_HEIGHT
 let BUTTON_WIDTH
 
 // Letters array
-const letters = new Array();
-for (let i = 0; i < columns; i++) {
-  letters[i] = new Array;
-  for (let j = 0; j < rows; j++) {
-    letters[i][j] = null;
-  }
-}
+let letterIndex;
+let wordIndex;
+let letters;
 
 function setup() {
   /* ----- Initialize variables -----*/
   // Generic variables
-  w     = 450;
-  h     = 600;
+  w     = windowWidth;
+  h     = windowHeight;
   xCur  = 0;
   yCur  = 0;
 
@@ -74,11 +70,11 @@ function setup() {
   BUTTON_WIDTH = 100;
 
   // Letters array
-  // for (j = 0; j < rows; j++) {
-  //   letters[j][0] = '';
-  // }
+  letterIndex = 0;
+  wordIndex = 0;
+  letters = Array.from(Array(rows), () => new Array(columns));
 
-  // Create the canvas we'll work on as well as the background color
+  // Create the canvas we'll work on
   createCanvas(w, h);
 } // setup()
 
@@ -95,18 +91,20 @@ function draw() {
 
 } // draw()
 
+/* --------------------- */
+/* ----- FUNCTIONS ----- */
+/* --------------------- */
+
 function mouseClicked() {
   xLimit = BUTTON_WIDTH / 2;
   yLimit = BUTTON_HEIGHT / 2;
 
-
-  console.log(mouseX + ", " + mouseY)
-
-  console.log("xLimit = " + xLimit)
-  console.log("yLimit = " + yLimit)
-  console.log("leftLimit = " + ((w/2) - xLimit) + " rightLimit = " + ((w/2) + xLimit))
-  console.log("upperLimit = " + ((h/2) - yLimit) + " rightLimit = " + ((h/2) + yLimit))
-
+  // // log where the mouse is
+  // console.log(mouseX + ", " + mouseY)
+  // console.log("xLimit = " + xLimit)
+  // console.log("yLimit = " + yLimit)
+  // console.log("leftLimit = " + ((w/2) - xLimit) + " rightLimit = " + ((w/2) + xLimit))
+  // console.log("upperLimit = " + ((h/2) - yLimit) + " rightLimit = " + ((h/2) + yLimit))
 
   if (menu == 0) {
     if (mouseX > (w/2 - xLimit) && mouseX < (w/2 + xLimit)) {
@@ -115,13 +113,44 @@ function mouseClicked() {
       }
     }
   }
-  else {
-    menu = 0;
-  }
+  // else {
+  //   menu = 0;
+  // }
 } // mouseClicked()
 
+function keyPressed() {
+  if (keyCode === BACKSPACE) {
+    letterIndex--;
+    if (letterIndex == -1) {
+      letters[wordIndex][letterIndex + 1] = null;
+      letterIndex++;
+    } else {
+      letters[wordIndex][letterIndex] = null;
+    }
+    console.log(letters);
+  } // BACKSPACE
+  else {
+    letters[wordIndex][letterIndex] = String.fromCharCode(keyCode);
+    incrementIndex();
+    console.log(letters);
+  }
+  console.log("Letter: " + letterIndex + " Word: " + wordIndex);
+} // keyPressed()
+
+function incrementIndex() {
+  letterIndex += 1;
+  if (letterIndex != 0 && letterIndex % columns == 0) {
+    letterIndex = 0;
+    wordIndex += 1;
+  }
+} // incrementIndex()
+
+/* ----------------- */
+/* ----- MENUS ----- */
+/* ----------------- */
+
 function gameView() {
-  background(43);
+  background(40);
   rectMode(CORNER);
 
   /* ----- Draw the grid and letter boxes ----- */
@@ -157,7 +186,7 @@ function gameView() {
 }
 
 function menuView(){
-  background(43);
+  background(40);
 
   rectMode(CENTER)
   fill(btnStart)
