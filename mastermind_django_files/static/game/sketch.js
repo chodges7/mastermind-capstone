@@ -79,16 +79,11 @@ function setup() {
 } // setup()
 
 function draw() {
-  // TODO: check the keyboard for input. 
-  //   When a letter is input update the letters array at that position.
-
   if(menu == 0) {
     menuView();
-  }
-  if(menu == 1) {
+  } else if(menu == 1) {
     gameView();
   } 
-
 } // draw()
 
 /* --------------------- */
@@ -122,35 +117,34 @@ function keyPressed() {
   if (keyCode === BACKSPACE) {
     letterIndex--;
     if (letterIndex == -1) {
-      letters[wordIndex][letterIndex + 1] = null;
+      letters[wordIndex][letterIndex + 1] = '';
       letterIndex++;
     } else {
-      letters[wordIndex][letterIndex] = null;
+      letters[wordIndex][letterIndex] = '';
     }
-    console.log(letters);
-  } // BACKSPACE
-  else {
+    // console.log(letters);
+  } else if (keyCode === ENTER) {
+    if (letterIndex != 0 && letterIndex % columns == 0) {
+      letterIndex = 0;
+      wordIndex = (wordIndex + 1) % rows;
+    }    
+  } else {
     letters[wordIndex][letterIndex] = String.fromCharCode(keyCode);
-    incrementIndex();
-    console.log(letters);
+    // letterIndex = (letterIndex + 1) % columns;
+    if (letterIndex < columns) {
+      letterIndex++;
+    }
+    // console.log(letters);
   }
   console.log("Letter: " + letterIndex + " Word: " + wordIndex);
 } // keyPressed()
-
-function incrementIndex() {
-  letterIndex += 1;
-  if (letterIndex != 0 && letterIndex % columns == 0) {
-    letterIndex = 0;
-    wordIndex += 1;
-  }
-} // incrementIndex()
 
 /* ----------------- */
 /* ----- MENUS ----- */
 /* ----------------- */
 
 function gameView() {
-  background(40);
+  background(60);
   rectMode(CORNER);
 
   /* ----- Draw the grid and letter boxes ----- */
@@ -177,6 +171,11 @@ function gameView() {
       else
         fill(letterRight);
       square(xPos, yPos, squareSize, 10);
+      fill(0);
+      textAlign(CENTER, CENTER);
+      textSize(30);
+      text(letters[j][i], xPos, yPos + (squareSize / 2) + 2, squareSize);
+
 
       // if (letters[i][j] != null) {
       //   print("This letter is " + letters[i][j])
