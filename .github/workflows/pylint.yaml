@@ -12,6 +12,9 @@ jobs:
     env:
       working-directory: ./mastermind_django_files
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
     outputs:
       score: ${{ steps.linter.outputs.score }}
 
