@@ -50,8 +50,6 @@ function setup() {
   squareSize  = 60;
   yOffset     = 45;
   xOffset     = 0;
-  yMargin     = (h - rows * gridSize) / 2 + yOffset;
-  xMargin     = (w - columns * gridSize) / 2 + xOffset;
 
   // Color variables
   gridColor   = 50;
@@ -139,6 +137,12 @@ function keyPressed() {
   console.log("Letter: " + letterIndex + " Word: " + wordIndex);
 } // keyPressed()
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight, true);
+  w = windowWidth;
+  h = windowHeight;
+} // windowResized()
+
 /* ----------------- */
 /* ----- MENUS ----- */
 /* ----------------- */
@@ -146,6 +150,9 @@ function keyPressed() {
 function gameView() {
   background(60);
   rectMode(CORNER);
+
+  yMargin = (h - rows * gridSize) / 2 + yOffset;
+  xMargin = (w - columns * gridSize) / 2 + xOffset;
 
   /* ----- Draw the grid and letter boxes ----- */
   // for each box in the grid...
