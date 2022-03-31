@@ -12,7 +12,8 @@ services:
 
   web:
     build: .
-    command: python3 mastermind_django_files/manage.py runserver 0.0.0.0:80
+    entrypoint:
+      ./entrypoint.sh
     volumes:
       - .:/code
     ports:
