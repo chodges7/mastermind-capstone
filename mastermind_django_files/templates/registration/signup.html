@@ -17,6 +17,7 @@
       success: function (data) {
         if (data.is_taken) {
           alert(data.error_message);
+          location.reload();
         }
       }
     });
