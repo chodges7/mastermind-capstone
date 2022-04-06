@@ -243,3 +243,4 @@ mastermind/front_end/node_modules
 *.env
 data/
 node_modules/
+package-lock.json
