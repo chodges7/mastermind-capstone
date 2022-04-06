@@ -34,6 +34,7 @@ let BUTTON_WIDTH
 let letterIndex;
 let wordIndex;
 let letters;
+let goalWord;
 
 // Regular expression for letters
 let regex = new RegExp('[A-Za-z]+')
@@ -83,6 +84,7 @@ function draw() {
   if(menu == 0) {
     menuView();
   } else if(menu == 1) {
+    goalWord = 'PEAR'
     gameView();
   } 
 } // draw()
@@ -115,6 +117,8 @@ function mouseClicked() {
 } // mouseClicked()
 
 function keyPressed() {
+  character = String.fromCharCode(keyCode);
+
   if (keyCode === BACKSPACE) {
     letterIndex--;
     if (letterIndex == -1) {
@@ -126,15 +130,14 @@ function keyPressed() {
     // console.log(letters);
   } 
   else if (keyCode === ENTER) {
+    goalWordVerify();
     if (letterIndex != 0 && letterIndex % columns == 0) {
       letterIndex = 0;
       wordIndex = (wordIndex + 1) % rows;
-    }    
+    }
   }
-
   // if not backspace or enter check for character
-  character = String.fromCharCode(keyCode);
-  if (regex.test(character)){
+  else if (regex.test(character)){
     letters[wordIndex][letterIndex] = character;
     // letterIndex = (letterIndex + 1) % columns;
     if (letterIndex < columns) {
@@ -153,6 +156,34 @@ function windowResized() {
   w = windowWidth;
   h = windowHeight;
 } // windowResized()
+
+function goalWordFill(i, j) {
+  if(letters[j][i] == null || letters[j][i] == '' || j >= wordIndex) {
+    fill(letterBlank)
+  }
+  else if(goalWord.includes(letters[j][i])) {
+    fill(letterClose);
+    if(goalWord[i] == letters[j][i]) {
+      fill(letterRight);
+    }
+  }
+  else {
+    fill(letterWrong);
+  }
+}
+
+function goalWordVerify() {
+  win = true;
+  for (let i = 0; i < columns; i++) {
+    if (letters[wordIndex][i] != goalWord[i]) {
+      win = false;
+    }
+  }
+  if (win) {
+    console.log(`You won! Goal word was: ${goalWord}`);
+    setTimeout(() => { setup() }, 3000); // wait for 3 seconds
+  }
+}
 
 /* ----------------- */
 /* ----- MENUS ----- */
@@ -182,12 +213,8 @@ function gameView() {
       fill(gridColor);
       square(gridxPos, gridyPos, gridSize, 4);
 
-      if ((j + 1) % 2)
-        fill(letterClose);
-      else if ((j + 1) % 3)
-        fill(letterWrong);
-      else
-        fill(letterRight);
+      goalWordFill(i, j);
+
       square(xPos, yPos, squareSize, 10);
       fill(0);
       textAlign(CENTER, CENTER);
