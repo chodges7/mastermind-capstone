@@ -23,7 +23,7 @@ let letterWrong // color of when a guessed letter is wrong
 let btnStart    // color of menu start button
 let btnGeneric  // color of generic button
 
-// Menu
+// Menu variable
 let menu
 
 // Button Variables
@@ -34,6 +34,9 @@ let BUTTON_WIDTH
 let letterIndex;
 let wordIndex;
 let letters;
+
+// Regular expression for letters
+let regex = new RegExp('[A-Za-z]+')
 
 function setup() {
   /* ----- Initialize variables -----*/
@@ -121,20 +124,28 @@ function keyPressed() {
       letters[wordIndex][letterIndex] = '';
     }
     // console.log(letters);
-  } else if (keyCode === ENTER) {
+  } 
+  else if (keyCode === ENTER) {
     if (letterIndex != 0 && letterIndex % columns == 0) {
       letterIndex = 0;
       wordIndex = (wordIndex + 1) % rows;
     }    
-  } else {
-    letters[wordIndex][letterIndex] = String.fromCharCode(keyCode);
+  }
+
+  // if not backspace or enter check for character
+  character = String.fromCharCode(keyCode);
+  if (regex.test(character)){
+    letters[wordIndex][letterIndex] = character;
     // letterIndex = (letterIndex + 1) % columns;
     if (letterIndex < columns) {
       letterIndex++;
     }
     // console.log(letters);
   }
-  console.log("Letter: " + letterIndex + " Word: " + wordIndex);
+  else {
+    console.log(`Bad key: ${character}`)
+  }
+  // console.log(`Letter: ${letterIndex} Word: ${wordIndex}`);
 } // keyPressed()
 
 function windowResized() {
