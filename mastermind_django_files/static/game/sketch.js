@@ -37,6 +37,10 @@ let goalWord;
 // Regular expression for letters
 const regex = /[A-Za-z]+/;
 
+/* --------------------------- */
+/* ----- P5.JS FUNCTIONS ----- */
+/* --------------------------- */
+
 function setup () {
     /* ----- Initialize variables -----*/
     // Generic variables
@@ -114,54 +118,12 @@ function mouseClicked () {
     }
 } // mouseClicked()
 
-function keyPressed () {
-    const character = String.fromCodePoint(keyCode);
-
-    if (keyCode === BACKSPACE) {
-        letterIndex--;
-        if (letterIndex === -1) {
-            letters[wordIndex][letterIndex + 1] = "";
-            letterIndex++;
-        } else {
-            letters[wordIndex][letterIndex] = "";
-        }
-    // console.log(letters);
-    } else if (keyCode === ENTER) {
-        goalWordVerify();
-        if (letterIndex !== 0 && letterIndex % columns === 0) {
-            letterIndex = 0;
-            wordIndex = (wordIndex + 1) % rows;
-            if(wordIndex === 0) {
-                failed();
-            }
-        }
-    }
-    // if not backspace or enter check for character
-    else if (regex.test(character)) {
-        letters[wordIndex][letterIndex] = character;
-        // letterIndex = (letterIndex + 1) % columns;
-        if (letterIndex < columns) {
-            letterIndex++;
-        }
-    // console.log(letters);
-    } else {
-        console.log(`Bad key: ${character}`);
-    }
-    // console.log(`Letter: ${letterIndex} Word: ${wordIndex}`);
-} // keyPressed()
-
-function windowResized () {
-    resizeCanvas(windowWidth, windowHeight, true);
-    w = windowWidth;
-    h = windowHeight;
-} // windowResized()
-
 function failed() {
     console.log(`You lost! :( Goal word was: ${goalWord}`);
     setTimeout(() => {
         setup();
     }, 3000); // wait for 3 seconds
-}
+} // failed()
 
 function goalWordFill (i, j) {
     if (letters[j][i] === undefined || letters[j][i] === "" || j >= wordIndex) {
@@ -174,7 +136,7 @@ function goalWordFill (i, j) {
     } else {
         fill(letterWrong);
     }
-}
+} // goalWordFill()
 
 function goalWordVerify () {
     win = true;
@@ -190,7 +152,49 @@ function goalWordVerify () {
             setup();
         }, 3000); // wait for 3 seconds
     }
-}
+} // goalWordVerify()
+
+function keyPressed() {
+    const character = String.fromCodePoint(keyCode);
+
+    if (keyCode === BACKSPACE) {
+        letterIndex--;
+        if (letterIndex === -1) {
+            letters[wordIndex][letterIndex + 1] = "";
+            letterIndex++;
+        } else {
+            letters[wordIndex][letterIndex] = "";
+        }
+        // console.log(letters);
+    } else if (keyCode === ENTER) {
+        goalWordVerify();
+        if (letterIndex !== 0 && letterIndex % columns === 0) {
+            letterIndex = 0;
+            wordIndex = (wordIndex + 1) % rows;
+            if (wordIndex === 0) {
+                failed();
+            }
+        }
+    }
+    // if not backspace or enter check for character
+    else if (regex.test(character)) {
+        letters[wordIndex][letterIndex] = character;
+        // letterIndex = (letterIndex + 1) % columns;
+        if (letterIndex < columns) {
+            letterIndex++;
+        }
+        // console.log(letters);
+    } else {
+        console.log(`Bad key: ${character}`);
+    }
+    // console.log(`Letter: ${letterIndex} Word: ${wordIndex}`);
+} // keyPressed()
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight, true);
+    w = windowWidth;
+    h = windowHeight;
+} // windowResized()
 
 /* ----------------- */
 /* ----- MENUS ----- */
@@ -233,7 +237,7 @@ function gameView () {
             // }
         }
     }
-}
+} // gameView()
 
 function menuView () {
     background(40);
@@ -247,4 +251,4 @@ function menuView () {
     textSize(25);
     fill(0);
     text("Start", w / 2, h / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
-}
+} // menuView()
