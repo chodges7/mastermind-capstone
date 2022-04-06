@@ -131,6 +131,9 @@ function keyPressed () {
         if (letterIndex !== 0 && letterIndex % columns === 0) {
             letterIndex = 0;
             wordIndex = (wordIndex + 1) % rows;
+            if(wordIndex === 0) {
+                failed();
+            }
         }
     }
     // if not backspace or enter check for character
@@ -152,6 +155,13 @@ function windowResized () {
     w = windowWidth;
     h = windowHeight;
 } // windowResized()
+
+function failed() {
+    console.log(`You lost! :( Goal word was: ${goalWord}`);
+    setTimeout(() => {
+        setup();
+    }, 3000); // wait for 3 seconds
+}
 
 function goalWordFill (i, j) {
     if (letters[j][i] === undefined || letters[j][i] === "" || j >= wordIndex) {
@@ -175,7 +185,7 @@ function goalWordVerify () {
     }
 
     if (win) {
-        console.log(`You won! Goal word was: ${goalWord}`);
+        console.log(`You won!`);
         setTimeout(() => {
             setup();
         }, 3000); // wait for 3 seconds
