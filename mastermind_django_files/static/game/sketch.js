@@ -119,7 +119,7 @@ function mouseClicked () {
 function failed() {
     console.log(`You lost! :( Goal word was: ${goalWord}`);
     setTimeout(() => {
-        setup();
+        location.reload();
     }, 3000); // wait for 3 seconds
 } // failed()
 
@@ -140,6 +140,7 @@ function goalWordVerify () {
     win = true;
     for (let i = 0; i < columns; i++) {
         if (letters[wordIndex][i] !== goalWord[i]) {
+            console.log(`${letters[wordIndex][i]} != ${goalWord[i]}`);
             win = false;
         }
     }
@@ -147,13 +148,16 @@ function goalWordVerify () {
     if (win) {
         console.log(`You won!`);
         setTimeout(() => {
-            setup();
+            location.reload();
         }, 3000); // wait for 3 seconds
     }
 } // goalWordVerify()
 
 function keyPressed() {
     const character = String.fromCodePoint(keyCode);
+    if (menu !== 1) {
+        return;
+    }
 
     if (keyCode === BACKSPACE) {
         letterIndex--;
