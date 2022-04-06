@@ -32,7 +32,6 @@ let BUTTON_WIDTH;
 let letterIndex;
 let wordIndex;
 let letters;
-let goalWord;
 
 // Regular expression for letters
 const regex = /[A-Za-z]+/;
@@ -84,7 +83,6 @@ function draw () {
     if (menu === 0) {
         menuView();
     } else if (menu === 1) {
-        goalWord = "PEAR";
         gameView();
     }
 } // draw()
