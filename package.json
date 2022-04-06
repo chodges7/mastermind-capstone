@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "rword": "^3.2.1"
+  },
+  "devDependencies": {
+    "@liatrio/eslint-config": "^1.2.0",
+    "eslint": "^8.12.0"
+  }
+}
