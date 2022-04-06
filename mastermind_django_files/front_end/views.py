@@ -1,9 +1,7 @@
-# from django.shortcuts import render
-import imp
+from random import choice
 from django.http import HttpResponse
 from django.template import loader
 from random_word import RandomWords
-from random import choice
 # from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -17,7 +15,7 @@ def home_view(request):
 def game_view(request):
     template = loader.get_template('game.html')
 
-    word = str(getWord())
+    word = str(get_word())
 
     context = {
         'page_title':'Mastermind',
@@ -25,11 +23,11 @@ def game_view(request):
     }
     return HttpResponse(template.render(context, request))
 
-def getWord():
+def get_word():
     rand = RandomWords()
-    list = rand.get_random_words(minLength=4, maxLength=4, limit=10,
+    words = rand.get_random_words(minLength=4, maxLength=4, limit=10,
                        hasDictionaryDef=True, minCorpusCount=50)
-    for word in list:
+    for word in words:
         if '.' in word:
-            list.remove(word)
-    return choice(list)
+            words.remove(word)
+    return choice(words)
