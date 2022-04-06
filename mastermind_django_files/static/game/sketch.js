@@ -65,6 +65,7 @@ function setup () {
 
     // Menu variable
     menu = 0;
+    won = false;
 
     // Button Variables
     BUTTON_HEIGHT = 50;
@@ -117,10 +118,12 @@ function mouseClicked () {
 } // mouseClicked()
 
 function failed() {
-    console.log(`You lost! :( Goal word was: ${goalWord}`);
-    setTimeout(() => {
-        location.reload();
-    }, 3000); // wait for 3 seconds
+    if(!won){
+        console.log(`You lost! :( Goal word was: ${goalWord}`);
+        setTimeout(() => {
+            location.reload();
+        }, 3500); // wait for 3 seconds
+    }
 } // failed()
 
 function goalWordFill (i, j) {
@@ -146,6 +149,7 @@ function goalWordVerify () {
     }
 
     if (win) {
+        won = true;
         console.log(`You won!`);
         setTimeout(() => {
             location.reload();
@@ -169,11 +173,12 @@ function keyPressed() {
         }
         // console.log(letters);
     } else if (keyCode === ENTER) {
-        goalWordVerify();
+        goalWordVerify()
         if (letterIndex !== 0 && letterIndex % columns === 0) {
             letterIndex = 0;
-            wordIndex = (wordIndex + 1) % rows;
-            if (wordIndex === 0) {
+            wordIndex++;
+            // wordIndex = (wordIndex + 1) % rows; // wrap the wordIndex on rows
+            if (wordIndex >= rows) {
                 failed();
             }
         }
@@ -233,10 +238,6 @@ function gameView () {
             textAlign(CENTER, CENTER);
             textSize(30);
             text(letters[j][i], xPos, yPos + (squareSize / 2) + 2, squareSize);
-
-            // if (letters[i][j] != null) {
-            //   print("This letter is " + letters[i][j])
-            // }
         }
     }
 } // gameView()

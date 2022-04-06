@@ -16,6 +16,7 @@ def game_view(request):
     template = loader.get_template('game.html')
 
     word = str(get_word())
+    word = word.upper()
 
     context = {
         'page_title':'Mastermind',
