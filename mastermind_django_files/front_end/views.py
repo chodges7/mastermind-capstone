@@ -26,8 +26,8 @@ def game_view(request):
     return HttpResponse(template.render(context, request))
 
 def getWord():
-    r = RandomWords()
-    list = r.get_random_words(minLength=4, maxLength=4, limit=10,
+    rand = RandomWords()
+    list = rand.get_random_words(minLength=4, maxLength=4, limit=10,
                        hasDictionaryDef=True, minCorpusCount=50)
     for word in list:
         if '.' in word:
