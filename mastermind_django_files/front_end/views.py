@@ -7,7 +7,7 @@ from random_word import RandomWords
 from .models import Games
 from hashlib import sha1
 from time import time, sleep
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home_view(request):
@@ -17,12 +17,14 @@ def home_view(request):
     }
     return HttpResponse(template.render(context, request))
 
+
+@login_required(redirect_field_name='login')
 def game_view(request):
     template = loader.get_template('game.html')
 
     word = "pear" # str(get_word())
     word = word.upper()
-    current_game_id = get_game_id()
+    current_game_id = get_game_id(request.user)
     game = Games(game_id = current_game_id, gamer = request.user)
     game.save()
 
@@ -32,11 +34,18 @@ def game_view(request):
     }
     return HttpResponse(template.render(context, request))
 
-def get_game_id():
-    hash = sha1()
-    hash.update(str(time()).encode('utf-8'))
-    print(hash.hexdigest())
-    return hash.hexdigest()
+def get_game_id(cur_user):
+    previous_games = Games.objects.filter(gamer=cur_user, completed=False)
+
+    print(previous_games)
+
+    if previous_games.exists():
+        return previous_games[0].game_id
+    else:
+        hash = sha1()
+        hash.update(str(time()).encode('utf-8'))
+        print(hash.hexdigest())
+        return hash.hexdigest()
 
 def get_word():
     word_length = 4
@@ -45,7 +54,7 @@ def get_word():
                                     limit=10, hasDictionaryDef=True, minCorpusCount=200)
     print(words)
     if words is None:
-        sleep(.5)
+        sleep(1)
         return get_word()
     for word in words:
         temp = word
