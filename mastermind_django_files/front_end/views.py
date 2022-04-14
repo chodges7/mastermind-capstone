@@ -1,12 +1,11 @@
 from random import choice
 from re import sub
-from django.http import HttpResponse
-from django.template import loader
-from django.contrib.auth import get_user_model
-from random_word import RandomWords
-from .models import Games
 from hashlib import sha1
 from time import time, sleep
+from django.http import HttpResponse
+from django.template import loader
+from random_word import RandomWords
+from .models import Games
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -42,10 +41,10 @@ def get_game_id(cur_user):
     if previous_games.exists():
         return previous_games[0].game_id
     else:
-        hash = sha1()
-        hash.update(str(time()).encode('utf-8'))
-        print(hash.hexdigest())
-        return hash.hexdigest()
+        my_hash = sha1()
+        my_hash.update(str(time()).encode('utf-8'))
+        print(my_hash.hexdigest())
+        return my_hash.hexdigest()
 
 def get_word():
     word_length = 4
