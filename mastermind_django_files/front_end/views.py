@@ -4,9 +4,9 @@ from hashlib import sha1
 from time import time, sleep
 from django.http import HttpResponse
 from django.template import loader
+from django.contrib.auth.decorators import login_required
 from random_word import RandomWords
 from .models import Games
-from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home_view(request):
@@ -36,15 +36,17 @@ def game_view(request):
 def get_game_id(cur_user):
     previous_games = Games.objects.filter(gamer=cur_user, completed=False)
 
+    ret = ""
     print(previous_games)
 
     if previous_games.exists():
-        return previous_games[0].game_id
+        ret = previous_games[0].game_id
     else:
         my_hash = sha1()
         my_hash.update(str(time()).encode('utf-8'))
         print(my_hash.hexdigest())
-        return my_hash.hexdigest()
+        ret = my_hash.hexdigest()
+    return ret
 
 def get_word():
     word_length = 4
