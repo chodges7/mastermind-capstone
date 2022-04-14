@@ -119,7 +119,7 @@ function mouseClicked () {
 
 function failed() {
     if(!won){
-        console.log(`You lost! :( Goal word was: ${goalWord}`);
+        alert(`You lost! :( Goal word was: ${goalWord}`);
         setTimeout(() => {
             location.reload();
         }, 3500); // wait for 3 seconds
@@ -150,7 +150,7 @@ function goalWordVerify () {
 
     if (win) {
         won = true;
-        console.log(`You won!`);
+        alert(`You won!`);
         setTimeout(() => {
             location.reload();
         }, 3000); // wait for 3 seconds

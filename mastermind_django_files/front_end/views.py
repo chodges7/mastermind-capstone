@@ -1,4 +1,5 @@
 from random import choice
+from re import sub
 from django.http import HttpResponse
 from django.template import loader
 from random_word import RandomWords
@@ -25,10 +26,20 @@ def game_view(request):
     return HttpResponse(template.render(context, request))
 
 def get_word():
+    word_length = 4
     rand = RandomWords()
-    words = rand.get_random_words(minLength=4, maxLength=4, limit=10,
-                       hasDictionaryDef=True, minCorpusCount=50)
+    words = rand.get_random_words(minLength=word_length, maxLength=word_length, 
+                                    limit=10, hasDictionaryDef=True, minCorpusCount=200)
+    print(words)
     for word in words:
-        if '.' in word:
-            words.remove(word)
+        words.remove(word)
+        if word == None:
+            continue
+        print(word)
+        word = sub(r'[\W_]+', '', word)
+        print(word)
+        if len(word) == 4:
+            words.append(word)
+    print(words)
+
     return choice(words)
