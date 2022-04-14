@@ -28,18 +28,20 @@ def game_view(request):
 def get_word():
     word_length = 4
     rand = RandomWords()
-    words = rand.get_random_words(minLength=word_length, maxLength=word_length, 
-                                    limit=10, hasDictionaryDef=True, minCorpusCount=200)
+    words = rand.get_random_words(minLength=word_length, maxLength=word_length,
+                                    limit=10, hasDictionaryDef=True, minCorpusCount=225)
     print(words)
-    for word in words:
-        words.remove(word)
-        if word == None:
-            continue
-        print(word)
-        word = sub(r'[\W_]+', '', word)
-        print(word)
-        if len(word) == 4:
-            words.append(word)
+    if words is not None:
+        for word in words:
+            temp = word
+            words.remove(word)
+            if temp is None:
+                continue
+            print("before sub:", temp)
+            temp = sub(r'[\W_]+', '', temp)
+            print("after sub:", temp)
+            if len(temp) == 4:
+                words.append(temp)
     print(words)
 
     return choice(words)
