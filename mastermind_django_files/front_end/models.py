@@ -20,4 +20,4 @@ class Games(models.Model):
 
     # Methods
     def __str__(self):
-        return self.game_id
+        return str(self.gamer) + " - " + self.game_id
