@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "test": "eslint ./mastermind_django_files/static/game/sketch.js"
+  },
   "dependencies": {
     "rword": "^3.2.1"
   },
