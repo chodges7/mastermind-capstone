@@ -14,7 +14,9 @@ class Games(models.Model):
 
     # Metadata
     class Meta:
-        ordering = ['gamer', 'game_id']
+        ordering            = ['gamer', 'game_id']
+        verbose_name        = "Mastermind Game"
+        verbose_name_plural = "Mastermind Games"
 
     # Methods
     def __str__(self):
