@@ -16,7 +16,6 @@ def home_view(request):
     }
     return HttpResponse(template.render(context, request))
 
-
 @login_required(redirect_field_name='login')
 def game_view(request):
     template = loader.get_template('game.html')
