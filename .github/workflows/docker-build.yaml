@@ -3,8 +3,18 @@ name: Docker Build CI
 on:
   push:
     branches: [ main ]
+    paths:
+      - "mastermind_django_files"
+      - "docker-compose.yaml"
+      - "Dockerfile"
+      - "entrypoint.sh"
   pull_request:
     branches: [ main ]
+    paths:
+      - "mastermind_django_files"
+      - "docker-compose.yaml"
+      - "Dockerfile"
+      - "entrypoint.sh"
 
 jobs:
   build:
