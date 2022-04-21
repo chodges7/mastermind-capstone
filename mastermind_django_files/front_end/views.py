@@ -46,6 +46,7 @@ def game_entry(request):
         Games.objects.filter(game_id=game_id).update(guesses = guesses)
         json_game = serializers.serialize("json", Games.objects.filter(game_id=game_id))
         return JsonResponse({'game': json_game})
+    return JsonResponse({'game': None})
 
 # ----- FUNCTIONS -----
 
