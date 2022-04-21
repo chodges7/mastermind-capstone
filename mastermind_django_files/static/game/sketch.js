@@ -32,6 +32,7 @@ let BUTTON_WIDTH;
 let letterIndex;
 let wordIndex;
 let letters;
+let jsonObj;
 
 // Regular expression for letters
 const regex = /[A-Za-z]+/;
@@ -75,6 +76,7 @@ function setup () {
     letterIndex = 0;
     wordIndex = 0;
     letters = [...new Array(rows)].map(() => new Array(columns));
+    guessesJSON = { guesses:[] }
 
     // Create the canvas we'll work on
     createCanvas(w, h);
@@ -91,6 +93,29 @@ function draw () {
 /* --------------------- */
 /* ----- FUNCTIONS ----- */
 /* --------------------- */
+
+function addWord() {
+    let word = "";
+    for (let i = 0; i < columns; i++) {
+        word += letters[wordIndex][i];
+    }
+    guessesJSON["guesses"].push(word);
+}
+
+function ajaxPost() {
+    $.ajax({
+        method: "POST",
+        url: "/guess_entry",
+        data: {
+            game_id: gameId,
+            guesses: JSON.stringify(guessesJSON)
+        },
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+        }
+    });
+}
 
 function mouseClicked () {
     xLimit = BUTTON_WIDTH / 2;
@@ -173,8 +198,10 @@ function keyPressed() {
         }
         // console.log(letters);
     } else if (keyCode === ENTER) {
-        goalWordVerify()
         if (letterIndex !== 0 && letterIndex % columns === 0) {
+            addWord();
+            ajaxPost();
+            goalWordVerify();
             letterIndex = 0;
             wordIndex++;
             // wordIndex = (wordIndex + 1) % rows; // wrap the wordIndex on rows
