@@ -1,5 +1,3 @@
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
 from random import choice
 from re import sub
 from hashlib import sha1
@@ -8,6 +6,8 @@ from django.core import serializers
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from random_word import RandomWords
 from .models import Games
 
@@ -46,8 +46,6 @@ def game_entry(request):
         Games.objects.filter(game_id=game_id).update(guesses = guesses)
         json_game = serializers.serialize("json", Games.objects.filter(game_id=game_id))
         return JsonResponse({'game': json_game})
-    else:
-        return JsonResponse({'game': None})
 
 # ----- FUNCTIONS -----
 
