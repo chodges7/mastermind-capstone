@@ -1,14 +1,17 @@
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from random import choice
 from re import sub
 from hashlib import sha1
 from time import time, sleep
-from django.http import HttpResponse
+from django.core import serializers
+from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth.decorators import login_required
 from random_word import RandomWords
 from .models import Games
 
-# Create your views here.
+# ----- VIEWS -----
 def home_view(request):
     template = loader.get_template('home.html')
     context = {
@@ -28,9 +31,25 @@ def game_view(request):
 
     context = {
         'page_title':'Mastermind',
-        'word':word
+        'word':word,
+        'game_id': current_game_id
     }
     return HttpResponse(template.render(context, request))
+
+@method_decorator(csrf_exempt, name='dispatch')
+def game_entry(request):
+    # game_id = request.GET.get('game_id', None)
+    if request.method == "POST":
+        game_id = request.POST.get('game_id')
+        guesses = request.POST.get('guesses')
+        print("guesses: ", guesses)
+        Games.objects.filter(game_id=game_id).update(guesses = guesses)
+        json_game = serializers.serialize("json", Games.objects.filter(game_id=game_id))
+        return JsonResponse({'game': json_game})
+    else:
+        return JsonResponse({'game': None})
+
+# ----- FUNCTIONS -----
 
 def get_game_id(cur_user):
     previous_games = Games.objects.filter(gamer=cur_user, completed=False)
