@@ -27,7 +27,7 @@ def game_view(request):
     word = word.upper() # let's make it uppercase
 
     # does the current user have a game going?
-    current_game_id = get_game_id(request.user) 
+    current_game_id = get_game_id(request.user)
     game = Games.objects.filter(game_id = current_game_id, gamer = request.user)
     if not game.exists():
         game = Games(game_id=current_game_id, gamer=request.user)
@@ -58,7 +58,7 @@ def game_entry(request):
         # ... so we can return it for debug purposes
         return JsonResponse({'game': json_game})
     # else just return "None"
-    elif request.method == "GET":
+    if request.method == "GET":
         # Grab all the data we'll need from the request
         game_id = request.GET.get('game_id')
 
