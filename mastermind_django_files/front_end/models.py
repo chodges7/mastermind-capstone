@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 def default_json():
-    return {"guesses": []}
+    return {"guesses": ["default"]}
 
 class Games(models.Model):
 

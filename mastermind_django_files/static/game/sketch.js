@@ -33,6 +33,7 @@ let letterIndex;
 let wordIndex;
 let letters;
 let jsonObj;
+let guessesJSON;
 
 // Regular expression for letters
 const regex = /[A-Za-z]+/;
@@ -48,7 +49,7 @@ function setup () {
     h = windowHeight;
 
     // Grid Variables
-    columns = 4;
+    columns = 5;
     rows = 6;
     gridSize = 75;
     squareSize = 60;
@@ -76,7 +77,19 @@ function setup () {
     letterIndex = 0;
     wordIndex = 0;
     letters = [...new Array(rows)].map(() => new Array(columns));
-    guessesJSON = { guesses:[] }
+    $.ajax({
+        method: "GET",
+        url: "/guess_entry",
+        data: {
+            game_id: gameId
+        },
+        dataType: 'json',
+        success: function (data) {
+            setupJSON(data)
+        } // success function()
+    });
+    
+
 
     // Create the canvas we'll work on
     createCanvas(w, h);
@@ -99,22 +112,45 @@ function addWord() {
     for (let i = 0; i < columns; i++) {
         word += letters[wordIndex][i];
     }
-    guessesJSON["guesses"].push(word);
+    if ((guessesJSON["guesses"].length - 1) <= wordIndex) {
+        guessesJSON["guesses"][wordIndex] = word;
+    }
+    else {
+        guessesJSON["guesses"].push(word);
+    }
+    print(guessesJSON);
 }
 
-function ajaxPost() {
-    $.ajax({
-        method: "POST",
-        url: "/guess_entry",
-        data: {
-            game_id: gameId,
-            guesses: JSON.stringify(guessesJSON)
-        },
-        dataType: 'json',
-        success: function (data) {
-            console.log(data);
-        }
-    });
+function ajaxPost(done) {
+    if (done) {
+        $.ajax({
+            method: "POST",
+            url: "/guess_entry",
+            data: {
+                game_id: gameId,
+                guesses: JSON.stringify(guessesJSON),
+                completed: "True"
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    }
+    else {
+        $.ajax({
+            method: "POST",
+            url: "/guess_entry",
+            data: {
+                game_id: gameId,
+                guesses: JSON.stringify(guessesJSON),
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    }
 }
 
 function mouseClicked () {
@@ -175,10 +211,14 @@ function goalWordVerify () {
 
     if (win) {
         won = true;
+        ajaxPost(true);
         alert(`You won!`);
         setTimeout(() => {
             location.reload();
         }, 3000); // wait for 3 seconds
+    }
+    else {
+        ajaxPost(false);
     }
 } // goalWordVerify()
 
@@ -200,12 +240,12 @@ function keyPressed() {
     } else if (keyCode === ENTER) {
         if (letterIndex !== 0 && letterIndex % columns === 0) {
             addWord();
-            ajaxPost();
             goalWordVerify();
             letterIndex = 0;
             wordIndex++;
             // wordIndex = (wordIndex + 1) % rows; // wrap the wordIndex on rows
             if (wordIndex >= rows) {
+                ajaxPost(true);
                 failed();
             }
         }
@@ -223,6 +263,34 @@ function keyPressed() {
     }
     // console.log(`Letter: ${letterIndex} Word: ${wordIndex}`);
 } // keyPressed()
+
+function setupJSON(data) {
+    // print(data);
+    // print("data type:", typeof(data[0][0]))
+    if (typeof(data[0][0]) === "string") {
+        // print("it's a string");
+        guessesJSON = JSON.parse(data[0][0]);
+    }
+    else {
+        // print("it's not a string");
+        guessesJSON = data[0][0];
+    }
+    // print("guessesJSON type:", typeof(guessesJSON));
+    // print(guessesJSON);
+    for (let i = 0; i < guessesJSON["guesses"].length; i++) {
+        if (guessesJSON["guesses"][i] === "default") {
+            wordIndex = i;
+            guessesJSON["guesses"][i] = "";
+            print(`starting game @ ${wordIndex}`)
+            break;
+        }
+        wordIndex = i + 1;
+        for (let j = 0; j < columns; j++) {
+            letters[i][j] = guessesJSON["guesses"][i][j];
+        } // for each letter
+    } // for each word in guessesJSON
+    print(`starting game @ ${wordIndex}`)
+}
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight, true);
