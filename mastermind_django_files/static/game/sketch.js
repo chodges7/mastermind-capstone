@@ -86,10 +86,8 @@ function setup () {
         dataType: 'json',
         success: function (data) {
             setupJSON(data)
-        } // success function()
+        }
     });
-    
-
 
     // Create the canvas we'll work on
     createCanvas(w, h);
@@ -98,7 +96,8 @@ function setup () {
 function draw () {
     if (menu === 0) {
         menuView();
-    } else if (menu === 1) {
+    } 
+    else if (menu === 1) {
         gameView();
     }
 } // draw()
@@ -166,13 +165,13 @@ function mouseClicked () {
 
     // if we're on the base menu...
     if (menu === 0 && // ... and we're within the right x limits...
-         mouseX > ((w / 2) - xLimit) && mouseX < ((w / 2) + xLimit)) // ... and we're within the right y limits...
-    {
-        if (mouseY > ((h / 2) - yLimit) && mouseY < ((h / 2) + yLimit))
+         mouseX > ((w / 2) - xLimit) && mouseX < ((w / 2) + xLimit)) {
+        // ... and we're within the right y limits...
+        if (mouseY > ((h / 2) - yLimit) && mouseY < ((h / 2) + yLimit)) {
         // ... then we've clicked a button!
-        {
             menu = 1;
-        } else {
+        } 
+        else {
             menu = 0;
         }
     }
@@ -190,12 +189,14 @@ function failed() {
 function goalWordFill (i, j) {
     if (letters[j][i] === undefined || letters[j][i] === "" || j >= wordIndex) {
         fill(letterBlank);
-    } else if (goalWord.includes(letters[j][i])) {
+    } 
+    else if (goalWord.includes(letters[j][i])) {
         fill(letterClose);
         if (goalWord[i] === letters[j][i]) {
             fill(letterRight);
         }
-    } else {
+    } 
+    else {
         fill(letterWrong);
     }
 } // goalWordFill()
@@ -233,7 +234,8 @@ function keyPressed() {
         if (letterIndex === -1) {
             letters[wordIndex][letterIndex + 1] = "";
             letterIndex++;
-        } else {
+        } 
+        else {
             letters[wordIndex][letterIndex] = "";
         }
         // console.log(letters);
@@ -257,39 +259,41 @@ function keyPressed() {
         if (letterIndex < columns) {
             letterIndex++;
         }
-        // console.log(letters);
-    } else {
+    } 
+    else {
         console.log(`Bad key: ${character}`);
     }
-    // console.log(`Letter: ${letterIndex} Word: ${wordIndex}`);
 } // keyPressed()
 
 function setupJSON(data) {
-    // print(data);
-    // print("data type:", typeof(data[0][0]))
+    // Now that we have backend data, we need to parse it
+    // Sometimes, it's a string and sometimes it's an object
+    // If it's a string...
     if (typeof(data[0][0]) === "string") {
-        // print("it's a string");
+        // ... use JSON.parse()
         guessesJSON = JSON.parse(data[0][0]);
     }
     else {
-        // print("it's not a string");
+        // ... else just assgin it
         guessesJSON = data[0][0];
     }
-    // print("guessesJSON type:", typeof(guessesJSON));
-    // print(guessesJSON);
+
+    // For every word in guesses...
     for (let i = 0; i < guessesJSON["guesses"].length; i++) {
+        // ... ,assuing it's not "default", ...
         if (guessesJSON["guesses"][i] === "default") {
             wordIndex = i;
             guessesJSON["guesses"][i] = "";
-            print(`starting game @ ${wordIndex}`)
             break;
         }
+        // ... set the new wordIndex, and sync the letters array
         wordIndex = i + 1;
         for (let j = 0; j < columns; j++) {
             letters[i][j] = guessesJSON["guesses"][i][j];
         } // for each letter
     } // for each word in guessesJSON
-    print(`starting game @ ${wordIndex}`)
+    // Do a log about where we're starting
+    console.log(`starting game @ ${wordIndex}`)
 }
 
 function windowResized() {
@@ -322,7 +326,6 @@ function gameView () {
             const gridyPos = (j * gridSize) + yMargin;
 
             // ...create the two boxes in the grid
-
             fill(gridColor);
             square(gridxPos, gridyPos, gridSize, 4);
 
