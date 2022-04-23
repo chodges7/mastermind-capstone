@@ -308,12 +308,18 @@ function windowResized() {
 
 function gameView () {
     background(60);
-    rectMode(CORNER);
 
+    /* ----- Draw the logo ----- */
+    rectMode(CENTER);
+    textSize(75);
+    fill(12);
+    text("Mastermind", w / 2, (h / 2) - 250, BUTTON_WIDTH * 3, BUTTON_HEIGHT * 2);
+
+    /* ----- Draw the grid and letter boxes ----- */
+    rectMode(CORNER);
     yMargin = ((h - (rows * gridSize)) / 2) + yOffset;
     xMargin = ((w - (columns * gridSize)) / 2) + xOffset;
 
-    /* ----- Draw the grid and letter boxes ----- */
     // for each box in the grid...
     for (let i = 0; i < columns; i++) {
         for (let j = 0; j < rows; j++) {
@@ -341,9 +347,15 @@ function gameView () {
 } // gameView()
 
 function menuView () {
-    background(40);
+    background(60);
 
+    /* ----- Draw the logo ----- */
     rectMode(CENTER);
+    textSize(75);
+    fill(12);
+    text("Mastermind", w / 2, (h / 2) - 100, BUTTON_WIDTH * 3, BUTTON_HEIGHT * 2);
+
+    /* ----- Draw the Start button ----- */
     fill(btnStart);
     rect(w / 2, h / 2, BUTTON_WIDTH, BUTTON_HEIGHT, 10);
 
