@@ -125,6 +125,7 @@ function addWord() {
 }
 
 function ajaxPost(done) {
+    // If game is completed send completed = true in ajax post
     if (done) {
         $.ajax({
             method: "POST",
@@ -160,13 +161,6 @@ function mouseClicked () {
     xLimit = BUTTON_WIDTH / 2;
     yLimit = BUTTON_HEIGHT / 2;
 
-    // // log where the mouse is
-    // console.log(mouseX + ", " + mouseY)
-    // console.log("xLimit = " + xLimit)
-    // console.log("yLimit = " + yLimit)
-    // console.log("leftLimit = " + ((w/2) - xLimit) + " rightLimit = " + ((w/2) + xLimit))
-    // console.log("upperLimit = " + ((h/2) - yLimit) + " rightLimit = " + ((h/2) + yLimit))
-
     // if we're on the base menu...
     if (menu === 0 && // ... and we're within the right x limits...
          mouseX > ((w/2) - xLimit) && mouseX < ((w/2) + xLimit)) {
@@ -175,7 +169,7 @@ function mouseClicked () {
         // ... then we've clicked a button!
             menu = 1;
         }
-        if (mouseY > ((h/2 + 70) - yLimit) && mouseY < ((h/2 + 70) + yLimit)) {
+        else if (mouseY > ((h/2 + 70) - yLimit) && mouseY < ((h/2 + 70) + yLimit)) {
             location.href = 'about';
         }
         else {
@@ -194,25 +188,36 @@ function failed() {
 } // failed()
 
 function goalWordFill (i, j) {
+    // If the letter is blank...
     if (letters[j][i] === undefined || letters[j][i] === "" || j >= wordIndex) {
+        // ...then fill with color(letterBlank)
         fill(letterBlank);
     } 
+    // or if the letter is the goalWord...
     else if (goalWord.includes(letters[j][i])) {
+        // ...then use color(letterClose)
         fill(letterClose);
+        // ...but if the letter is also in the right spot
         if (goalWord[i] === letters[j][i]) {
+            // ...then use the color(letterRight)
             fill(letterRight);
         }
-    } 
+    }
+    // or if the letter is not in the word at all...
     else {
+        // ...then use color(letterWrong)
         fill(letterWrong);
     }
 } // goalWordFill()
 
 function goalWordVerify () {
+    // assume win was true
     win = true;
     for (let i = 0; i < columns; i++) {
+        // If any letters aren't in the correct spot
         if (letters[wordIndex][i] !== goalWord[i]) {
-            console.log(`${letters[wordIndex][i]} != ${goalWord[i]}`);
+            // console.log(`${letters[wordIndex][i]} != ${goalWord[i]}`);
+            // ...then set win to false
             win = false;
         }
     }
@@ -232,10 +237,12 @@ function goalWordVerify () {
 
 function keyPressed() {
     const character = String.fromCodePoint(keyCode);
+    // If we're on the opening menu, then don't do anything
     if (menu !== 1) {
         return;
     }
 
+    // If you hit backspace then delete a character
     if (keyCode === BACKSPACE) {
         letterIndex--;
         if (letterIndex === -1) {
@@ -246,7 +253,9 @@ function keyPressed() {
             letters[wordIndex][letterIndex] = "";
         }
         // console.log(letters);
-    } else if (keyCode === ENTER) {
+    }
+    // If you hit the enter button then verify if the word is correct
+    else if (keyCode === ENTER) {
         if (letterIndex !== 0 && letterIndex % columns === 0) {
             addWord();
             goalWordVerify();
@@ -266,7 +275,8 @@ function keyPressed() {
         if (letterIndex < columns) {
             letterIndex++;
         }
-    } 
+    }
+    // Default to logging a bad key press
     else {
         console.log(`Bad key: ${character}`);
     }
@@ -305,6 +315,7 @@ function setupJSON(data) {
 }
 
 function windowResized() {
+    // If the window is resized, then resize the w and h variables and canvas
     resizeCanvas(windowWidth, windowHeight, true);
     w = windowWidth;
     h = windowHeight;
