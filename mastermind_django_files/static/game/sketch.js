@@ -169,12 +169,15 @@ function mouseClicked () {
 
     // if we're on the base menu...
     if (menu === 0 && // ... and we're within the right x limits...
-         mouseX > ((w / 2) - xLimit) && mouseX < ((w / 2) + xLimit)) {
+         mouseX > ((w/2) - xLimit) && mouseX < ((w/2) + xLimit)) {
         // ... and we're within the right y limits...
-        if (mouseY > ((h / 2) - yLimit) && mouseY < ((h / 2) + yLimit)) {
+        if (mouseY > ((h/2) - yLimit) && mouseY < ((h/2) + yLimit)) {
         // ... then we've clicked a button!
             menu = 1;
-        } 
+        }
+        if (mouseY > ((h/2 + 70) - yLimit) && mouseY < ((h/2 + 70) + yLimit)) {
+            location.href = 'about';
+        }
         else {
             menu = 0;
         }
@@ -358,17 +361,20 @@ function menuView () {
     rectMode(CENTER);
     textSize(75);
     fill(12);
-    text("Mastermind", w / 2, (h / 2) - 100, BUTTON_WIDTH * 3, BUTTON_HEIGHT * 2);
+    text("Mastermind", w/2, (h/2)-100, BUTTON_WIDTH * 3, BUTTON_HEIGHT * 2);
 
     /* ----- Draw the Start button ----- */
     fill(btnStart);
-    rect(w / 2, h / 2, BUTTON_WIDTH, BUTTON_HEIGHT, 10);
+    rect(w/2, h/2, BUTTON_WIDTH, BUTTON_HEIGHT, 10);
+    rect(w/2, h/2 + 70, BUTTON_WIDTH, BUTTON_HEIGHT, 10);
 
     textFont("Georgia");
     textAlign(CENTER, CENTER);
     textSize(25);
     fill(0);
-    text("Start", w / 2, h / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
+    text("Start", w/2, h/2, BUTTON_WIDTH, BUTTON_HEIGHT);
+
+    text("About", w/2, h/2 + 70, BUTTON_WIDTH, BUTTON_HEIGHT)
 } // menuView()
 
 /* -------------------- */
