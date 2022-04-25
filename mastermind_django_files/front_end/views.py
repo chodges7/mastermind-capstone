@@ -1,14 +1,11 @@
-from random import choice
-from re import sub
 from hashlib import sha1
-from time import time, sleep
+from time import time
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from random_word import RandomWords
 from .models import Games
 
 # ----- VIEWS -----
@@ -23,9 +20,6 @@ def home_view(request):
 def game_view(request):
     template = loader.get_template('game.html')
 
-    word = "pears"  # str(get_word()) # what is our goal word?
-    word = word.upper() # let's make it uppercase
-
     # does the current user have a game going?
     current_game_id = get_game_id(request.user)
     game = Games.objects.filter(game_id = current_game_id, gamer = request.user)
@@ -36,7 +30,6 @@ def game_view(request):
     # context for the page
     context = {
         'page_title':'Mastermind',
-        'word':word,
         'game_id': current_game_id
     }
     return HttpResponse(template.render(context, request))
@@ -90,26 +83,3 @@ def get_game_id(cur_user):
         ret = my_hash.hexdigest()
     # return the id
     return ret
-
-def get_word():
-    word_length = 4
-    rand = RandomWords()
-    words = rand.get_random_words(minLength=word_length, maxLength=word_length,
-                                    limit=10, hasDictionaryDef=True, minCorpusCount=200)
-    print(words)
-    if words is None:
-        sleep(1)
-        return get_word()
-    for word in words:
-        temp = word
-        words.remove(word)
-        if temp is None:
-            continue
-        print("before sub:", temp)
-        temp = sub(r'[\W_]+', '', temp)
-        print("after sub:", temp)
-        if len(temp) == 4:
-            words.append(temp)
-    print(words)
-
-    return choice(words)
