@@ -9,10 +9,10 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Games
 
 # ----- VIEWS -----
-def home_view(request):
-    template = loader.get_template('home.html')
+def about_view(request):
+    template = loader.get_template('about.html')
     context = {
-        'page_title':"Homepage",
+        'page_title':"About Page",
     }
     return HttpResponse(template.render(context, request))
 

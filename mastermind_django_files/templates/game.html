@@ -4,11 +4,6 @@
 {% block title %} {{ page_title }} {% endblock %}
 
 {% block header %}
-{% if user.is_authenticated %}
-Hi {{ user.username }}! | <a href="{% url 'logout' %}">Log Out</a>
-{% else %}
-You are not logged in | <a href="{% url 'login' %}">Log In</a> | <a href="{% url 'signup' %}">Signup</a>
-{% endif %}
 {% endblock %}
 
 {% block head %}

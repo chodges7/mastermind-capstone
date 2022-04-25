@@ -27,13 +27,16 @@
 
 <body class="text-center" style="background-color: rgb(40, 40, 40);">
     <header class="header bg-black text-center text-white-50">
-        {% block header %}
-        {% endblock %}
+        {% if user.is_authenticated %}
+        Hi {{ user.username }}! | <a href="{% url 'logout' %}">Log Out</a>
+        {% else %}
+        You are not logged in | <a href="{% url 'login' %}">Log In</a> | <a href="{% url 'signup' %}">Signup</a>
+        {% endif %}
     </header>
     <main>
         <div class="contianer">
             <div class="row justify-content-center">
-                <div class="col-6">
+                <div class="col-9">
                     {% block content %}
                     {% endblock %}
                 </div>
