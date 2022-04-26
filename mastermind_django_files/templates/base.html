@@ -28,7 +28,7 @@
 <body class="text-center" style="background-color: rgb(40, 40, 40);">
     <header class="header bg-black text-center text-white-50">
         {% if user.is_authenticated %}
-        Hi {{ user.username }}! | <a href="{% url 'logout' %}">Log Out</a>
+        Hi {{ user.username }}! | <a href="{% url 'game' %}">Mastermind</a> | <a href="{% url 'stats' %}">Stats</a> | <a href="{% url 'logout' %}">Log Out</a>
         {% else %}
         You are not logged in | <a href="{% url 'login' %}">Log In</a> | <a href="{% url 'signup' %}">Signup</a>
         {% endif %}

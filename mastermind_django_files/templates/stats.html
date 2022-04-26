@@ -1,0 +1,14 @@
+<!-- templates/home.html-->
+<!-- https://learndjango.com/tutorials/django-password-reset-tutorial -->
+{% extends 'base.html' %}
+
+{% block title %} {{ page_title }} {% endblock %}
+
+{% block content %}
+<br><h3>Account Stats</h3><br>
+
+<h4>Total Games</h4>
+{{ stats.total_games }}
+
+<br><a href="{% url 'game' %}" class="btn btn-success">Back to the game</a></br>
+{% endblock %}
