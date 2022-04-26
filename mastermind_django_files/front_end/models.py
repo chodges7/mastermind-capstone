@@ -24,7 +24,7 @@ class Games(models.Model):
 class Stats(models.Model):
     # Fields
     total_games   = models.IntegerField(default=0)
-    gamer         = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    gamer         = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, primary_key=True)
     total_guesses = models.IntegerField(default=0)
     avg_guesses   = models.DecimalField(max_digits=4, decimal_places=3, default=0.000)
     total_time    = models.DecimalField(max_digits=7, decimal_places=3, default=0000.000)
@@ -38,4 +38,4 @@ class Stats(models.Model):
 
     # Methods
     def __str__(self):
-        return str(self.gamer) + " - games: " + self.total_games
+        return str(self.gamer) + " - games: " + str(self.total_games)
