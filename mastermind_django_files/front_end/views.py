@@ -86,7 +86,7 @@ def stats_entry(request):
         total_time = float(stats[0]['total_time']) + time_taken
         print(stats)
         Stats.objects.filter(gamer=request.user).update(
-            total_guesses=total_guesses, 
+            total_guesses=total_guesses,
             total_games=total_games,
             total_time=total_time)
 
