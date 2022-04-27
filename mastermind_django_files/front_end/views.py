@@ -6,7 +6,7 @@ from django.template import loader
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from .models import Games
+from .models import Games, Stats
 
 # ----- VIEWS -----
 def about_view(request):
@@ -27,10 +27,14 @@ def game_view(request):
         game = Games(game_id=current_game_id, gamer=request.user)
         game.save()
 
+    # does the user have a stats model?
+    stats = get_stats(request.user)
+
     # context for the page
     context = {
         'page_title':'Mastermind',
-        'game_id': current_game_id
+        'game_id': current_game_id,
+        'stats': stats
     }
     return HttpResponse(template.render(context, request))
 
@@ -63,6 +67,48 @@ def game_entry(request):
         return JsonResponse(list(game), safe=False)
     return JsonResponse({'game': None})
 
+
+@method_decorator(csrf_exempt, name='dispatch')
+def stats_entry(request):
+    # if we're doing a POST then do this:
+    if request.method == "POST":
+        # Grab all of the data we'll need from the request
+        guesses = request.POST.get('guesses')
+        time_taken = request.POST.get('time', 5.0)  # TODO don't use default
+
+        # Filter for the game object we need
+        stats = Stats.objects.filter(gamer=request.user).values()
+
+        print("STATS QUERYSET:", stats)
+
+        total_guesses = stats[0]['total_guesses'] + int(guesses)
+        total_games = stats[0]['total_games'] + 1
+        total_time = float(stats[0]['total_time']) + time_taken
+        print(stats)
+        Stats.objects.filter(gamer=request.user).update(
+            total_guesses=total_guesses, 
+            total_games=total_games,
+            total_time=total_time)
+
+        # return JsonResponse that model was updated
+        return JsonResponse({'stats': "updated"})
+    # else just return "None"
+    return JsonResponse({'stats': None})
+
+
+@login_required(redirect_field_name='login')
+def stats_view(request):
+    template = loader.get_template('stats.html')
+
+    # does the user have a stats model?
+    stats = get_stats(request.user)
+
+    context = {
+        'page_title': "Stats Page",
+        'stats': stats,
+    }
+    return HttpResponse(template.render(context, request))
+
 # ----- FUNCTIONS -----
 
 def get_game_id(cur_user):
@@ -82,4 +128,21 @@ def get_game_id(cur_user):
         print(my_hash.hexdigest())
         ret = my_hash.hexdigest()
     # return the id
+    return ret
+
+def get_stats(cur_user):
+    ret = ""
+
+    # filter for stats with the same user
+    previous_stats = Stats.objects.filter(gamer=cur_user)
+
+    # if any exist, send that Stats model
+    if previous_stats.exists():
+        ret = previous_stats[0]
+    # if none exist then return new Stats model
+    else:
+        ret = Stats(gamer=cur_user)
+        ret.save()
+
+    # return the Stats
     return ret

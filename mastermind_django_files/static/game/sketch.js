@@ -36,7 +36,8 @@ let jsonObj;
 let guessesJSON;
 
 // Regular expression for letters
-const regex = /[A-Za-z]+/;
+const regex = /[a-zA-Z]/;
+const gameIdRegex = /[a-zA-Z]/g;
 
 /* --------------------------- */
 /* ----- P5.JS FUNCTIONS ----- */
@@ -92,7 +93,7 @@ function setup () {
     // Create the canvas we'll work on
     createCanvas(w, h);
 
-    randomSeed(parseInt(gameId))
+    randomSeed(parseInt(gameId.replaceAll(gameIdRegex, '')) % 2147483647)
     goalWord = wordList["words"][floor(random(0, 2235))].toUpperCase()
     console.log(`Goal word is ${goalWord}`)
 } // setup()
@@ -134,6 +135,19 @@ function ajaxPost(done) {
                 game_id: gameId,
                 guesses: JSON.stringify(guessesJSON),
                 completed: "True"
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+
+        const total_guesses = (won ? wordIndex + 1 : wordIndex)
+        $.ajax({
+            method: "POST",
+            url: "/stats_entry",
+            data: {
+                guesses: total_guesses,
             },
             dataType: 'json',
             success: function (data) {

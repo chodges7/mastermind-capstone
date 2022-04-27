@@ -5,10 +5,15 @@
 {% block title %} {{ page_title }} {% endblock %}
 
 {% block content %}
-<br><h3>Account Stats</h3><br>
+<br><u><h1>Account Stats</h1></u>
 
-<h4>Total Games</h4>
-{{ stats.total_games }}
+<h4>
+    Total Games <br>
+    {{ stats.total_games }} <br>
+
+    Total Guesses <br>
+    {{ stats.total_guesses }} <br>
+</h4>
 
 <br><a href="{% url 'game' %}" class="btn btn-success">Back to the game</a></br>
 {% endblock %}
