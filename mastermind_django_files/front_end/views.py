@@ -103,9 +103,16 @@ def stats_view(request):
     # does the user have a stats model?
     stats = get_stats(request.user)
 
+    if stats.total_games > 0:
+        avg_guesses = stats.total_guesses / stats.total_games
+    else:
+        avg_guesses = 0.0
+
     context = {
         'page_title': "Stats Page",
-        'stats': stats,
+        'total_guesses': stats.total_guesses,
+        'total_games': stats.total_games,
+        'avg_guesses': avg_guesses
     }
     return HttpResponse(template.render(context, request))
 
