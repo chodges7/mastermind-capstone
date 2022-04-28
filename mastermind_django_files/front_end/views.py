@@ -74,7 +74,6 @@ def stats_entry(request):
     if request.method == "POST":
         # Grab all of the data we'll need from the request
         guesses = request.POST.get('guesses')
-        time_taken = request.POST.get('time', 5.0)  # TODO don't use default
 
         # Filter for the game object we need
         stats = Stats.objects.filter(gamer=request.user).values()
@@ -83,12 +82,10 @@ def stats_entry(request):
 
         total_guesses = stats[0]['total_guesses'] + int(guesses)
         total_games = stats[0]['total_games'] + 1
-        total_time = float(stats[0]['total_time']) + time_taken
         print(stats)
         Stats.objects.filter(gamer=request.user).update(
             total_guesses=total_guesses,
-            total_games=total_games,
-            total_time=total_time)
+            total_games=total_games)
 
         # return JsonResponse that model was updated
         return JsonResponse({'stats': "updated"})
@@ -108,11 +105,14 @@ def stats_view(request):
     else:
         avg_guesses = 0.0
 
+    all_stats = Stats.objects.all()
+
     context = {
         'page_title': "Stats Page",
         'total_guesses': stats.total_guesses,
         'total_games': stats.total_games,
-        'avg_guesses': avg_guesses
+        'avg_guesses': avg_guesses,
+        'all_stats': all_stats
     }
     return HttpResponse(template.render(context, request))
 

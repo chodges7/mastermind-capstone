@@ -6,18 +6,20 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h1>You must register to play Mastermind</h1>
-<h2>Log In</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <br><button type="submit" class="btn btn-success">Log In</button></br>
-</form>
-<p>
-    <br><a href="{% url 'signup' %}" class="btn btn-secondary">Signup here!</a></br>
-    <br><a href="{% url 'password_reset' %}" class="btn btn-secondary">Forgot Password?</a></br>
-</p>
+<div class="col-9">
+    <h1>You must register to play Mastermind</h1>
+    <h2>Log In</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <br><button type="submit" class="btn btn-success">Log In</button></br>
+    </form>
+    <p>
+        <br><a href="{% url 'signup' %}" class="btn btn-secondary">Signup here!</a></br>
+        <br><a href="{% url 'password_reset' %}" class="btn btn-secondary">Forgot Password?</a></br>
+    </p>
 
-<h3>Visit the about page here:</h3>
-<a href="{% url 'about' %}" class="btn btn-danger">About</a></br>
+    <h3>Visit the about page here:</h3>
+    <a href="{% url 'about' %}" class="btn btn-danger">About</a></br>
+</div>
 {% endblock %}

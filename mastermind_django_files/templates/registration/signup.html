@@ -26,13 +26,15 @@
 {% endblock %}
 
 {% block content %}
-<h2>Sign up</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-  <br><button type="submit" class="btn btn-success">Sign Up</button></br>
-</form>
-<p>
-  <br><a href="{% url 'login' %}" class="btn btn-secondary">Already have an account?</a></br>
-</p>
+<div class="col-9">
+  <h2>Sign up</h2>
+  <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+    <br><button type="submit" class="btn btn-success">Sign Up</button></br>
+  </form>
+  <p>
+    <br><a href="{% url 'login' %}" class="btn btn-secondary">Already have an account?</a></br>
+  </p>
+</div>
 {% endblock %}
