@@ -3,23 +3,23 @@ let w; // width of the canvas
 let h; // height of the canvas
 
 // Grid Variables
-let columns; // columns in the game (how long the words will be)
-let rows; // rows in the game (total amt of guesses)
-let gridSize; // size of the grid boxes
+let columns;    // columns in the game (how long the words will be)
+let rows;       // rows in the game (total amt of guesses)
+let gridSize;   // size of the grid boxes
 let squareSize; // size of the letter boxes
-let yOffset; // offset for pushing the grid up/down
-let xOffset; // offset for pushing the grid left/right
-let ymargin; // calculating the xmargin
-let xMargin; // calculating the ymargin
+let yOffset;    // offset for pushing the grid up/down
+let xOffset;    // offset for pushing the grid left/right
+let ymargin;    // calculating the xmargin
+let xMargin;    // calculating the ymargin
 
 // Colors
-let gridColor; // color of the grid
-let letterBlank; // color of the letter boxes when no letters have been used
-let letterRight; // color of when a guessed letter is correct
-let letterClose; // color of when a guessed letter is close
-let letterWrong; // color of when a guessed letter is wrong
-let btnStart; // color of menu start button
-let btnGeneric; // color of generic button
+let gridColor;       // color of the grid
+let letterBlank;     // color of the letter boxes when no letters have been used
+let letterRight;     // color of when a guessed letter is correct
+let letterClose;     // color of when a guessed letter is close
+let letterWrong;     // color of when a guessed letter is wrong
+let btnStart;        // color of menu start button
+let btnGeneric;      // color of generic button
 let backgroundColor; // color of the background
 
 // Menu variable
