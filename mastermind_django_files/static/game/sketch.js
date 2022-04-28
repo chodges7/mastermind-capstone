@@ -51,35 +51,35 @@ function setup () {
     h = windowHeight;
 
     // Grid Variables
-    columns = 5;
-    rows = 6;
-    gridSize = 75;
+    columns    = 5;
+    rows       = 6;
+    gridSize   = 75;
     squareSize = 60;
-    yOffset = 45;
-    xOffset = 0;
+    yOffset    = 45;
+    xOffset    = 0;
 
     // Color variables
-    gridColor = 50;
-    letterBlank = 60;
-    letterRight = color(19, 186, 65);
-    letterClose = color(255, 159, 45);
-    letterWrong = color(247, 65, 65);
-    btnStart = color(42, 161, 151);
-    btnGeneric = color(131, 148, 150);
+    gridColor       = 50;
+    letterBlank     = 60;
+    letterRight     = color(19, 186, 65);
+    letterClose     = color(255, 159, 45);
+    letterWrong     = color(247, 65, 65);
+    btnStart        = color(42, 161, 151);
+    btnGeneric      = color(131, 148, 150);
     backgroundColor = color(85, 85, 85);
 
     // Menu variable
     menu = 0;
-    won = false;
+    won  = false;
 
     // Button Variables
     BUTTON_HEIGHT = 50;
-    BUTTON_WIDTH = 100;
+    BUTTON_WIDTH  = 100;
 
     // Letters array
     letterIndex = 0;
-    wordIndex = 0;
-    letters = [...new Array(rows)].map(() => new Array(columns));
+    wordIndex   = 0;
+    letters     = [...new Array(rows)].map(() => new Array(columns));
     $.ajax({
         method: "GET",
         url: "/guess_entry",
