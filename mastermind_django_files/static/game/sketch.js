@@ -355,9 +355,9 @@ function gameView () {
     /* ----- Draw the logo ----- */
     rectMode(CENTER);
     textFont("Georgia");
-    textSize(75);
+    textSize(65);
     fill(12);
-    text("Mastermind", w / 2, (h / 2) - 250, BUTTON_WIDTH * 3, BUTTON_HEIGHT * 2);
+    text("Guess the Word!", w / 2, (h / 2) - 250, BUTTON_WIDTH * 5, BUTTON_HEIGHT * 2);
 
     /* ----- Draw the grid and letter boxes ----- */
     rectMode(CORNER);
