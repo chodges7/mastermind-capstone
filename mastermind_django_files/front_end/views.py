@@ -19,13 +19,13 @@ def about_view(request):
 @login_required(redirect_field_name='login')
 def game_view(request):
     template = loader.get_template('game.html')
-    starting_menu = 1;
+    starting_menu = 1
 
     # does the current user have a game going?
     current_game_id = get_game_id(request.user)
     game = Games.objects.filter(game_id = current_game_id, gamer = request.user)
     if not game.exists():
-        starting_menu = 0;
+        starting_menu = 0
         game = Games(game_id=current_game_id, gamer=request.user)
         game.save()
 
