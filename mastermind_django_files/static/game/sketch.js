@@ -69,7 +69,7 @@ function setup () {
     backgroundColor = color(85, 85, 85);
 
     // Menu variable
-    menu = 0;
+    menu = parseInt(starting_menu);
     won  = false;
 
     // Button Variables
@@ -346,6 +346,7 @@ function gameView () {
 
     /* ----- Draw the logo ----- */
     rectMode(CENTER);
+    textFont("Georgia");
     textSize(75);
     fill(12);
     text("Mastermind", w / 2, (h / 2) - 250, BUTTON_WIDTH * 3, BUTTON_HEIGHT * 2);
@@ -386,6 +387,7 @@ function menuView () {
 
     /* ----- Draw the logo ----- */
     rectMode(CENTER);
+    textFont("Georgia");
     textSize(75);
     fill(12);
     text("Mastermind", w/2, (h/2)-100, BUTTON_WIDTH * 3, BUTTON_HEIGHT * 2);

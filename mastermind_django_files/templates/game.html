@@ -13,8 +13,9 @@
 {% endblock %}
 
 {% block content %}
-<script src="{% static 'game/sketch.js' %}"></script>
 <script type="text/javascript">
     const gameId   = "{{ game_id }}";
+    const starting_menu = "{{ starting_menu }}";
 </script>
+<script src="{% static 'game/sketch.js' %}"></script>
 {% endblock %}
