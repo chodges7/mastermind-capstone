@@ -20,6 +20,7 @@ let letterClose; // color of when a guessed letter is close
 let letterWrong; // color of when a guessed letter is wrong
 let btnStart; // color of menu start button
 let btnGeneric; // color of generic button
+let backgroundColor; // color of the background
 
 // Menu variable
 let menu;
@@ -65,6 +66,7 @@ function setup () {
     letterWrong = color(247, 65, 65);
     btnStart = color(42, 161, 151);
     btnGeneric = color(131, 148, 150);
+    backgroundColor = color(85, 85, 85);
 
     // Menu variable
     menu = 0;
@@ -340,7 +342,7 @@ function windowResized() {
 /* ----------------- */
 
 function gameView () {
-    background(60);
+    background(backgroundColor);
 
     /* ----- Draw the logo ----- */
     rectMode(CENTER);
@@ -380,7 +382,7 @@ function gameView () {
 } // gameView()
 
 function menuView () {
-    background(60);
+    background(backgroundColor);
 
     /* ----- Draw the logo ----- */
     rectMode(CENTER);

@@ -34,7 +34,8 @@ def game_view(request):
     context = {
         'page_title':'Mastermind',
         'game_id': current_game_id,
-        'stats': stats
+        'stats': stats,
+        'color': 20
     }
     return HttpResponse(template.render(context, request))
 
