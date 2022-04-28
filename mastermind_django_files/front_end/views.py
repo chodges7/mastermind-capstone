@@ -100,19 +100,15 @@ def stats_view(request):
     # does the user have a stats model?
     stats = get_stats(request.user)
 
-    if stats.total_games > 0:
-        avg_guesses = stats.total_guesses / stats.total_games
-    else:
-        avg_guesses = 0.0
-
+    update_stats()
     all_stats = Stats.objects.all()
 
     context = {
         'page_title': "Stats Page",
         'total_guesses': stats.total_guesses,
         'total_games': stats.total_games,
-        'avg_guesses': avg_guesses,
-        'all_stats': all_stats
+        'avg_guesses': stats.avg_guesses,
+        'all_stats': all_stats,
     }
     return HttpResponse(template.render(context, request))
 
@@ -153,3 +149,11 @@ def get_stats(cur_user):
 
     # return the Stats
     return ret
+
+def update_stats():
+    all_stats = Stats.objects.all()
+
+    for stat in all_stats:
+        if stat.total_games > 0:
+            stat.avg_guesses = stat.total_guesses / stat.total_games
+            stat.save()

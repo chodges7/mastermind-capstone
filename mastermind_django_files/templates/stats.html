@@ -5,39 +5,65 @@
 {% block title %} {{ page_title }} {% endblock %}
 
 {% block content %}
-<div class="col-4">
+<div class="col-3">
     <br><u><h1>Account Stats</h1></u>
 
-    <h4>
-        Total Games <br>
-        {{ total_games }} <br>
+    <table class="table">
+        <h4>
+            <tr>
+                <td>Total Games</td>
+                <td>{{ total_games }}</td>
+            </tr>
 
-        Total Guesses <br>
-        {{ total_guesses }} <br>
+            <tr>
+                <td>Total Guesses</td>
+                <td>{{ total_guesses }}</td>
+            </tr>
 
-        Average Guesses <br>
-        {{ avg_guesses }} <br>
-    </h4>
-
-    <br><a href="{% url 'game' %}" class="btn btn-success">Back to the game</a></br>
+            <tr>
+                <td>Average Guesses</td>
+                <td>{{ avg_guesses }}</td>
+            </tr>
+        </h4>
+    </table>
 </div>
 
-<div class="col-4">
-    <br><u>
-        <h1>Account Stats</h1>
-    </u>
+<div class="row justify-content-center">
+    <div class="col-4">
+        <br><u>
+            <h1>Global Stats</h1>
+        </u>
 
-    <h4>
-        Total Games <br>
-        {{ total_games }} <br>
+        <table class="table">
+            <h4>
+                <tr>
+                    <td><b>User</b></td>
+                    <td>
+                        Total Guesses
+                    </td>
+                    <td>
+                        Average Guesses <br>
+                    </td>
+                </tr>
+                {% for stat in all_stats %}
+                    <tr>
+                        <td><b>{{ stat.gamer }}</b></td>
+                        <td>
+                            {{ stat.total_guesses }}
+                        </td>
+                        <td>
+                            {{ stat.avg_guesses }}<br>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </h4>
+        </table>
+    </div>
+</div>
 
-        Total Guesses <br>
-        {{ total_guesses }} <br>
-
-        Average Guesses <br>
-        {{ avg_guesses }} <br>
-    </h4>
-
-    <br><a href="{% url 'game' %}" class="btn btn-success">Back to the game</a></br>
+<div class="row justify-content-center">
+    <div class="col-4">
+        <br><a href="{% url 'game' %}" class="btn btn-success">Back to the game</a></br>
+    </div>
 </div>
 {% endblock %}
