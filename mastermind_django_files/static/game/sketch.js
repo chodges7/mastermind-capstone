@@ -129,7 +129,8 @@ function addWord() {
 
 function ajaxPost(done) {
     // If game is completed send completed = true in ajax post
-    if (done) {
+    if (done == "complete") {
+        console.log("Ajax POST - Complete")
         $.ajax({
             method: "POST",
             url: "/guess_entry",
@@ -143,13 +144,16 @@ function ajaxPost(done) {
                 console.log(data);
             }
         });
-
-        const total_guesses = (won ? wordIndex + 1 : wordIndex)
+    }
+    // if the game isn't completed then update their guesses 
+    else if (done == "guess_entry") {
+        console.log("Ajax POST - guess_entry")
         $.ajax({
             method: "POST",
-            url: "/stats_entry",
+            url: "/guess_entry",
             data: {
-                guesses: total_guesses,
+                game_id: gameId,
+                guesses: JSON.stringify(guessesJSON),
             },
             dataType: 'json',
             success: function (data) {
@@ -157,13 +161,15 @@ function ajaxPost(done) {
             }
         });
     }
-    else {
+    // finally, if they are done with the game then update their stats
+    else if (done = "stats_entry") {
+        console.log("Ajax POST - stats_entry")
+        const total_guesses = (won ? wordIndex + 1 : wordIndex)
         $.ajax({
             method: "POST",
-            url: "/guess_entry",
+            url: "/stats_entry",
             data: {
-                game_id: gameId,
-                guesses: JSON.stringify(guessesJSON),
+                guesses: total_guesses,
             },
             dataType: 'json',
             success: function (data) {
@@ -240,14 +246,15 @@ function goalWordVerify () {
 
     if (win) {
         won = true;
-        ajaxPost(true);
+        ajaxPost("stats_entry");
+        ajaxPost("complete");
         alert(`You won!`);
         setTimeout(() => {
             location.reload();
         }, 3000); // wait for 3 seconds
     }
     else {
-        ajaxPost(false);
+        ajaxPost("guess_entry");
     }
 } // goalWordVerify()
 
@@ -279,7 +286,8 @@ function keyPressed() {
             wordIndex++;
             // wordIndex = (wordIndex + 1) % rows; // wrap the wordIndex on rows
             if (wordIndex >= rows) {
-                ajaxPost(true);
+                ajaxPost("stats_entry")
+                ajaxPost("complete");
                 failed();
             }
         }
