@@ -28,8 +28,6 @@ class Stats(models.Model):
         get_user_model(), on_delete=models.CASCADE, primary_key=True)
     total_guesses = models.IntegerField(default=0)
     avg_guesses   = models.DecimalField(max_digits=4, decimal_places=3, default=0.000)
-    total_time    = models.DecimalField(max_digits=7, decimal_places=3, default=0000.000)
-    avg_time      = models.DecimalField(max_digits=7, decimal_places=3, default=0000.000)
 
     # Metadata
     class Meta:
