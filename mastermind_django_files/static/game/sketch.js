@@ -334,6 +334,11 @@ function setupJSON(data) {
         } // for each letter
     } // for each word in guessesJSON
 
+    if (wordIndex >= rows) {
+        ajaxPost("complete");
+        location.reload();
+    }
+
     // Do a log about where we're starting
     console.log(`starting game @ ${wordIndex}`)
 }
