@@ -100,11 +100,11 @@ def stats_entry(request):
 def stats_view(request):
     template = loader.get_template('stats.html')
 
-    # does the user have a stats model?
-    stats = get_stats(request.user)
-
     update_stats()
     all_stats = Stats.objects.all()
+
+    # does the user have a stats model?
+    stats = get_stats(request.user)
 
     context = {
         'page_title': "Stats Page",
