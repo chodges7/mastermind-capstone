@@ -12,6 +12,8 @@ services:
 
   web:
     image: ghcr.io/chodges7/mastermind-capstone:latest
+    entrypoint:
+      ./entrypoint.sh
     volumes:
       - .:/code
     ports:
