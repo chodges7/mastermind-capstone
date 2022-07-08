@@ -15,6 +15,7 @@ on:
       - "docker-compose.yaml"
       - "Dockerfile"
       - "entrypoint.sh"
+  workflow_dispatch:
 
 env:
   IMAGE_NAME: ghcr.io/chodges7/mastermind-capstone
