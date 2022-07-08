@@ -24,6 +24,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Generate tag
+      id: tag
+      run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
 
