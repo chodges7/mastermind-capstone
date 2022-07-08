@@ -11,9 +11,7 @@ services:
       - POSTGRES_PASSWORD=postgres
 
   web:
-    build: .
-    entrypoint:
-      ./entrypoint.sh
+    image: ghcr.io/chodges7/mastermind-capstone:latest
     volumes:
       - .:/code
     ports:
